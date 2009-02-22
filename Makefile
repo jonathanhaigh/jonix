@@ -9,6 +9,7 @@
 
 C_FILES=				\
 	lib/c/string.c 		\
+	lib/c/printf.c		\
 	lib/util/string.c 	\
 	lib/oarray.c		\
 	lib/mem.c			\
@@ -71,13 +72,15 @@ install: kernel.elf
 	umount /mnt/tmp
 
 test:
-	bochs
+	qbg bochs
 
 depend:
 	makedepend $(C_FILES) $(INCLUDE)
 # DO NOT DELETE
 
 lib/c/string.o: lib/c/string.h lib/c/stddef.h lib/c/stdint.h
+lib/c/printf.o: lib/c/stdio.h lib/c/stdarg.h lib/c/stddef.h lib/scrn.h
+lib/c/printf.o: lib/system.h lib/c/stddef.h lib/c/stdint.h
 lib/util/string.o: lib/util/util.h lib/c/stddef.h lib/c/stdint.h
 lib/oarray.o: lib/oarray.h lib/system.h lib/c/stddef.h lib/c/stdint.h
 lib/mem.o: lib/mem.h lib/system.h lib/c/stddef.h lib/c/stdint.h lib/oarray.h
@@ -114,7 +117,7 @@ lib/thr.o: lib/thr.h lib/system.h lib/c/stddef.h lib/c/stdint.h lib/list.h
 lib/thr.o: lib/tid.h lib/mem.h lib/oarray.h lib/c/string.h lib/scrn.h
 lib/sched.o: lib/thr.h lib/system.h lib/c/stddef.h lib/c/stdint.h lib/list.h
 lib/sched.o: lib/sched.h lib/isr.h
-main.o: lib/system.h lib/c/stddef.h lib/c/stdint.h lib/system_boot.h
-main.o: lib/ata.h lib/sem.h lib/list.h lib/isr.h lib/pci.h lib/util/util.h
-main.o: lib/scrn.h lib/mem.h lib/oarray.h lib/gdt.h lib/irq.h lib/idt.h
-main.o: lib/kb.h lib/time.h
+main.o: lib/c/stdio.h lib/c/stdarg.h lib/c/stddef.h lib/system.h
+main.o: lib/c/stddef.h lib/c/stdint.h lib/system_boot.h lib/ata.h lib/sem.h
+main.o: lib/list.h lib/isr.h lib/pci.h lib/util/util.h lib/scrn.h lib/mem.h
+main.o: lib/oarray.h lib/gdt.h lib/irq.h lib/idt.h lib/kb.h lib/time.h

@@ -7,6 +7,7 @@
 * Last edited by: Jonathan Haigh
 * --------------------------------------------------*/
 
+#include "c/stdio.h"
 #include "system.h"
 #include "system_boot.h"
 #include "ata.h"
@@ -123,9 +124,10 @@ int main(multiboot_info_t *mb_info){
     pci_init();
     scrn_puts("Done\n");
 
-    scrn_puts("Initialising ATA Devices...");
+    /*scrn_puts("Initialising ATA Devices...");
     ata_init();
     scrn_puts("Done\n");
+    */
 
     /* scrn_puts("Initialising threads module...");
     thr_init();
