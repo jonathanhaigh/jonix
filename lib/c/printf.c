@@ -83,7 +83,10 @@ DEFINE_NUM2STR(16, long, 20, u)
 
 #define SPRINT_C(c)             \
     tmp_char    = (c);          \
-    if(retval < size){          \
+    if(buffer == NULL){         \
+        scrn_putc(tmp_char);    \
+    }                           \
+    else if(retval < size){     \
         *(buffer++) = tmp_char; \
     }                           \
     retval++;
@@ -99,7 +102,7 @@ DEFINE_NUM2STR(16, long, 20, u)
     type ## 2str_ ## base ## str_case (tmp_str, tmp_ ## type);      \
     SPRINT_S(tmp_str);                                              \
 
-int vsnprintf(char *buffer, size_t size, const char *format, va_list ap){
+static int _printf_helper(char *buffer, size_t size, const char *format, va_list ap){
 
     int retval          = 0;
     int tmp_int         = 0;
@@ -140,6 +143,12 @@ int vsnprintf(char *buffer, size_t size, const char *format, va_list ap){
     return retval;
 }
 
+int vsnprintf(char *buffer, size_t size, const char *format, va_list ap){
+    if(buffer == NULL){
+        PANIC("Tried to print to NULL buffer.");
+    }
+    return _printf_helper(buffer, size, format, ap);
+}
 
 int snprintf(char *buffer, size_t size, const char *format, ...){
   va_list ap;
@@ -150,4 +159,18 @@ int snprintf(char *buffer, size_t size, const char *format, ...){
   va_end(ap);
 
   return (retval);
+}
+
+int vprintf(const char *format, va_list ap){
+    return _printf_helper(NULL, 0, format, ap);
+}
+
+int printf(const char *format, ...){
+    va_list ap;
+    int retval  = 0;
+    va_start(ap, format);
+    retval  = vprintf(format, ap);
+    va_end(ap);
+
+    return (retval);
 }

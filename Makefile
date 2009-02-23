@@ -121,3 +121,4 @@ main.o: lib/c/stdio.h lib/c/stdarg.h lib/c/stddef.h lib/system.h
 main.o: lib/c/stddef.h lib/c/stdint.h lib/system_boot.h lib/ata.h lib/sem.h
 main.o: lib/list.h lib/isr.h lib/pci.h lib/util/util.h lib/scrn.h lib/mem.h
 main.o: lib/oarray.h lib/gdt.h lib/irq.h lib/idt.h lib/kb.h lib/time.h
+main.o: lib/debug.h

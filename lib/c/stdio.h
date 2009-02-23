@@ -17,5 +17,7 @@
 
 extern int vsnprintf(char *buffer, size_t size, const char *format, va_list ap);
 extern int snprintf(char *buffer, size_t size, const char *format, ...);
+extern int vprintf(const char *format, va_list ap);
+extern int printf(const char *format, ...);
 
 #endif
