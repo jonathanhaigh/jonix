@@ -11,7 +11,7 @@
     Taken from http://osdever.net/bkerndev/Docs/idt.htm
 */
 #include "idt.h"
-#include "string.h"
+#include "c/string.h"
 #include "system_boot.h"
 
 /*
@@ -50,3 +50,4 @@ void idt_init(){
     /* Points the processor's internal register to the new IDT */
     idt_load();
 }
+

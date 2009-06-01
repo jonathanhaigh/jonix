@@ -12,16 +12,19 @@
 */
 
 #include "gdt.h"
-#include "string.h"
+#include "c/string.h"
 #include "mem.h"
+#include "thr.h"
 
-// TSS for ring 0
+// TSS for kernel
 //
-tss_t tss_0;
+tss_t tss_kernel;
 
 // The GDT
 //
-gdt_entry_t gdt[4];
+// TODO: put this on an 8 byte boundary for better performance.
+//
+gdt_entry_t gdt[GDT_SIZE];
 
 // The gdt_ptr_t struct
 //
@@ -30,66 +33,70 @@ gdt_ptr_t   gdt_ptr;
 /*  ----------------------------------------------------
  *  Function:       gdt_set_entry
  *  --------------------------------------------------*/
-void gdt_set_entry(
-    int index,
-    uint32_t base,
-    uint32_t limit,
-    uint8_t access,
-    uint8_t granularity
-){
-    /* Setup the descriptor base address */
-    gdt[index].base_low = (base & 0xFFFF);
-    gdt[index].base_mid = (base >> 16) & 0xFF;
-    gdt[index].base_high = (base >> 24) & 0xFF;
+void gdt_set_entry(int index, uint32_t base, uint32_t limit, uint8_t type, bool dpl){
 
-    /* Setup the descriptor limits */
-    gdt[index].limit_low = (limit & 0xFFFF);
-    gdt[index].granularity = ((limit >> 16) & 0x0F);
+    gdt[index].low  =   (base & 0xFFFF)     << GDT_ENTRY_L_BASE_LOW
+                      | (limit & 0xFFFF)    << GDT_ENTRY_L_LIMIT_LOW;
 
-    /* Finally, set up the granularity and access flags */
-    gdt[index].granularity |= (granularity & 0xF0);
-    gdt[index].access = access;
+    gdt[index].high =   (base >> 16 & 0xFF) << GDT_ENTRY_H_BASE_MID
+                      | (base >> 24 & 0xFF) << GDT_ENTRY_H_BASE_HIGH
+                      | (limit >> 16 & 0xF) << GDT_ENTRY_H_LIMIT_HIGH
+                      | (type & 0x1F)       << GDT_ENTRY_H_TYPE
+                      | (dpl & 3)           << GDT_ENTRY_H_DPL
+                      | 1                   << GDT_ENTRY_H_PRESENT
+                      | 0                   << GDT_ENTRY_H_AVAILABLE
+                      | 0                   << GDT_ENTRY_H_64_BIT
+                      | 1                   << GDT_ENTRY_H_32_BIT
+                      | 1                   << GDT_ENTRY_H_GRANULARITY;
+
 }
 
 /*  ----------------------------------------------------
  *  Function:       gdt_init
  *  --------------------------------------------------*/
 void gdt_init(){
-    /* Setup the GDT pointer and limit */
-    gdt_ptr.limit = (sizeof(gdt_entry_t) * 5) - 1;
+
+    // Setup the GDT pointer and limit
+    //
+    gdt_ptr.limit = (sizeof(gdt_entry_t) * GDT_SIZE) - 1;
     gdt_ptr.base = (uint32_t) &gdt;
 
-    /* Our NULL descriptor */
+    // Null descriptor
+    //
+    // Put this in unused data segment registers to make sure exceptions
+    // are created when accessing non-existent data segments
+    //
     gdt_set_entry(0, 0, 0, 0, 0);
 
-    /* The second entry is our Code Segment. The base address
-    *  is 0, the limit is 4GBytes, it uses 4KByte granularity,
-    *  uses 32-bit opcodes, and is a Code Segment descriptor.
-    *  Please check the table above in the tutorial in order
-    *  to see exactly what each value means */
-    gdt_set_entry(1, 0, 0xFFFFFFFF, 0x9A, 0xCF);
+    // Code segments - the whole 4G of memory.
+    //
+    gdt_set_entry(GDT_INDEX_KERN_CODE, 0, 0xFFFFFFFF, GDT_ENTRY_TYPE_CODE_XR, 0);
+    gdt_set_entry(GDT_INDEX_USER_CODE, 0, 0xFFFFFFFF, GDT_ENTRY_TYPE_CODE_XR, 0);
 
-    /* The third entry is our Data Segment. It's EXACTLY the
-    *  same as our code segment, but the descriptor type in
-    *  this entry's access byte says it's a Data Segment */
-    gdt_set_entry(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
+    // Data segments - the whole 4G of memory.
+    // These are also used as the stack segments.
+    //
+    gdt_set_entry(GDT_INDEX_KERN_DATA, 0, 0xFFFFFFFF, GDT_ENTRY_TYPE_DATA_RW, 0);
+    gdt_set_entry(GDT_INDEX_USER_DATA, 0, 0xFFFFFFFF, GDT_ENTRY_TYPE_DATA_RW, 0);
 
-    /* The fourth entry is a TSS descriptor (for ring 0)*/
-    gdt_set_entry(3, (uint32_t) &tss_0, sizeof(tss_0)-1, 0x89, 0x00);
+    // TSS descriptor for kernel
+    //
+    gdt_set_entry(GDT_INDEX_KERN_TSS, (uint32_t) &tss_kernel, sizeof(tss_t)-1, GDT_ENTRY_TYPE_TSS, 0);
 
-    /* Initialise the ring 0 TSS to zeros */
-    memset(&tss_0, 0, sizeof(tss_0));
+    // Initialise the kernel TSS to zeros
+    //
+    memset(&tss_kernel, 0, sizeof(tss_t));
 
-    /* Set stack info in the ring 0 TSS */
+    // Set kernel stack info in the kernel TSS 
 
-    tss_0.ss0    = 0x10;        // The descriptor used for the stack segment.
+    tss_kernel.ss0  = GDT_SEG_DESCRIPTOR(GDT_INDEX_KERN_TSS, 0);
+    
+    // We don't set the stack pointer until we are just about to load the TSS descriptor
+    // into the processor (done in gdt_flush()).
 
-    tss_0.esp0   = (uint32_t) kmem_stack;   // The base of the kernel stack.
-                                // This will be used as the stack pointer - 
-                                // once we start multitasking this should be
-                                // fine (I hope).
 
-    /* Flush out the old GDT and install the new changes! */
+    // Install the GDT
+    //
     gdt_flush();
 
 }

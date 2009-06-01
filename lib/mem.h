@@ -11,9 +11,12 @@
 #define _MEM_H
 
 #include "system.h"
-#include "oarray.h"
+#include "util/oarray.h"
 
 #define MALLOC_PANIC(var) if(var == NULL){ PANIC("Out of memory."); }
+
+// KEEP THIS CONSISTENT WITH CONSTANT IN boot.asm
+#define KERNEL_STACK_SIZE 0x4000
 
 /*
  * Some heap constants.
@@ -113,14 +116,14 @@ extern heap_t   *kheap; // The kernel's heap.
 /*
  * Functions from heap.c
  */
-extern heap_t * heap_place(void *start, int no_pages, bool rw, bool user);
-extern bool     heap_extend(heap_t *heap, int no_pages);
-extern void *   heap_alloc(heap_t *heap, uint32_t size, bool page_align);
-extern void *   heap_palloc(heap_t *heap);
-extern void *   heap_psalloc(heap_t *heap, uint16_t pages);
-extern bool     heap_free(heap_t *heap, void *addr);
-extern char     heap_index_sort(atype_t a, atype_t b);
-extern void     heap_print_info(heap_t * heap);
-extern void     heap_print_index(heap_t * heap);
+extern heap_t *   heap_place(void *start, int no_pages, bool rw, bool user);
+extern bool       heap_extend(heap_t *heap, int no_pages);
+extern void *     heap_alloc(heap_t *heap, uint32_t size, bool page_align);
+extern void *     heap_palloc(heap_t *heap);
+extern void *     heap_psalloc(heap_t *heap, uint16_t pages);
+extern bool       heap_free(heap_t *heap, void *addr);
+extern char       heap_hdr_t_cmp_size(list_item_t a, list_item_t b);
+extern void       heap_print_info(heap_t * heap);
+extern void       heap_print_index(heap_t * heap);
 
 #endif

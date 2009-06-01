@@ -8,8 +8,8 @@
 * --------------------------------------------------*/
 
 #include "mem.h"
-#include "string.h"
-#include "scrn.h"
+#include "c/string.h"
+#include "devs/scrn.h"
 
 /* These are variables defined in linker.ld.
  * Their *address* is what we actually want.
@@ -225,10 +225,10 @@ void mem_init(){
 
     set_page_dir(kpage_dir);
 
-    asm volatile(
-        "mov %%cr0, %%eax      \n\t"
-        "or 0x80000000, %%eax  \n\t" // bit 31 is the paging bit
-        "mov %%eax, %%cr0      \n\t"
+    asm volatile("              \
+        mov %%cr0, %%eax;       \
+        or 0x80000000, %%eax;   \
+        mov %%eax, %%cr0;"
         : : : "eax"
     );
 
@@ -274,31 +274,10 @@ void set_page_dir(page_dir_t pd){
 
     asm volatile(
         "mov %0, %%cr3"
-        : : "r" (pd)
+        :
+        : "r" (pd)
     );
 }
-
-/*  ----------------------------------------------------
- *  Function:       addr_v2p
- *
- *  Desc:           Converts a virtual address to a
- *                  physical address.
- *  --------------------------------------------------*/
-//uint32_t addr_v2p(uint32_t v){
-//
-//    /*
-//     * Erm...Draw a picture.
-//     *
-//     * Remember that the last entry in the page directory
-//     * maps to itself 
-//     */
-//
-//    uint16_t page_offset    = v % 4096;
-//    v   >>= 10;
-//    v    &= 0xFFFFFFFC;
-//    v    |= 0xFFC00000;
-//    return *((uint32_t *) v) + page_offset;
-//}
 
 /*  ----------------------------------------------------
  *  Function:       addr_v2p
@@ -562,6 +541,10 @@ void *kmalloc(uint32_t size){
     if(ptr == NULL){
         strcpy(mem_err, heap_err);
     }
+
+    // Initialise allocated memory to zeroes
+    //
+    memset(ptr, 0, size);
 
     return ptr;
 }

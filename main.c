@@ -10,17 +10,20 @@
 #include "c/stdio.h"
 #include "system.h"
 #include "system_boot.h"
-#include "ata.h"
-#include "pci.h"
-#include "util.h"
-#include "scrn.h"
+#include "devs/ata.h"
+#include "devs/pci.h"
+#include "devs/scrn.h"
 #include "mem.h"
 #include "isr.h"
 #include "gdt.h"
 #include "irq.h"
 #include "idt.h"
-#include "kb.h"
+#include "devs/kb.h"
 #include "time.h"
+#include "thr.h"
+#include "syscall.h"
+#include "c/fcntl.h"
+#include "filesystems/vfs.h"
 
 /*  ----------------------------------------------------
  *  Function:       main
@@ -30,112 +33,72 @@ int main(multiboot_info_t *mb_info){
     mem_total = 1024 + mb_info->mem_upper;
 
     scrn_clear();
-    scrn_puts("Welcome to Jonix\n\n");
+    printf("Booting Jonix...\n\n");
 
-    char str[10];
+    printf("Total system memory: %H\n\n", mem_total*1024);
 
-    /*
-    long2str_10h(str, mb_info->mem_lower * 1024, 4);
-    scrn_puts("Total Memory Before 1MB: ");
-    scrn_puts(str);
-
-    long2str_10h(str, mb_info->mem_upper * 1024, 4);
-    scrn_puts("\nTotal Memory After 1MB: ");
-    scrn_puts(str);
-    */
-
-    long2str_10h(str, mem_total*1024, 5);
-    scrn_puts("Total System Memory: ");
-    scrn_puts(str);
-    long2str_10h(str, (unsigned int)&kpage_dir, 4);
-    scrn_puts("\nStart of page directory: ");
-    scrn_puts(str);
-    long2str_10h(str, (unsigned int)&kmem_stack, 4);
-    scrn_puts("\nStart of kernel stack: ");
-    scrn_puts(str);
-
-
-    /*
-    long2str_10h(str, (unsigned int)&kmem_start, 4);
-    scrn_puts("\n\nStart of kernel in memory: ");
-    scrn_puts(str);
-
-    long2str_10h(str, (unsigned int)&kmem_text_start, 4);
-    scrn_puts("\nStart of kernel text section in memory: ");
-    scrn_puts(str);
-
-    long2str_10h(str, (unsigned int)&kmem_rodata_start, 4);
-    scrn_puts("\nStart of kernel rodata section in memory: ");
-    scrn_puts(str);
-
-    long2str_10h(str, (unsigned int)&kmem_data_start, 4);
-    scrn_puts("\nStart of kernel data section in memory: ");
-    scrn_puts(str);
-
-    long2str_10h(str, (unsigned int)&kmem_bss_start, 4);
-    scrn_puts("\nStart of kernel bss section in memory: ");
-    scrn_puts(str);
-
-
-    long2str_10h(str, (unsigned int)&kmem_end, 4);
-    scrn_puts("\nEnd of kernel in memory: ");
-    scrn_puts(str);
-    */
-
-    scrn_puts("\n\nInstalling GDT...");
+    printf("Installing GDT...");
     gdt_init();
-    scrn_puts("Done\n");
+    printf("Done\n");
 
-    scrn_puts("Installing IDT...");
+    printf("Installing IDT...");
     idt_init();
-    scrn_puts("Done\n");
+    printf("Done\n");
 
-    scrn_puts("Installing CPU Exception ISRs...");
+    printf("Installing CPU exception ISRs...");
     isr_init();
-    scrn_puts("Done\n");
+    printf("Done\n");
 
-    scrn_puts("Installing IRQ ISR Framework...");
+    printf("Installing IRQ framework...");
     irq_init();
-    scrn_puts("Done\n");
+    printf("Done\n");
 
-    scrn_puts("Initialising memory management structures...");
+    printf("Installing system call framework...");
+    syscall_init();
+    printf("Done\n");
+
+    printf("Initialising memory management structures...");
     mem_init();
-    scrn_puts("Done\n");
+    printf("Done\n");
 
-    /*
-    scrn_puts("Initialising ATA Devices...\n");
-    ata_init();
-    scrn_puts("Done\n");
-    */
-
-    scrn_puts("Initialising Time Functions...");
+    printf("Initialising Time Functions...");
     time_init();
-    scrn_puts("Done\n");
+    printf("Done\n");
 
-    scrn_puts("Initialising Keyboard...");
+    printf("Initialising Keyboard...");
     kb_init();
-    scrn_puts("Done\n");
+    printf("Done\n");
 
-    scrn_puts("Enabling Interrupts...");
-    __asm__ __volatile__("sti");
-    scrn_puts("Done\n");
-
-    scrn_puts("Scanning PCI Bus...");
+    printf("Scanning PCI Bus...");
     pci_init();
-    scrn_puts("Done\n");
+    printf("Done\n");
 
-    /*scrn_puts("Initialising ATA Devices...");
+    printf("Initialising ATA Devices...");
     ata_init();
-    scrn_puts("Done\n");
-    */
+    printf("Done\n");
 
-    /* scrn_puts("Initialising threads module...");
+    printf("Initialising threads module...");
     thr_init();
-    scrn_puts("Done\n");
-    */
+    printf("Done\n");
+
+    printf("Initialising VFS...");
+    vfs_init();
+    printf("Done\n");
+
 
     kb_print_to_screen  = 1;
 
-    for(;;);
+    printf("Enabling Interrupts...");
+    asm volatile("sti");
+    printf("Done\n");
+
+    // A timer interrupt will start the scheduler.
+    // 
+
+    
+
+    while(1) asm("hlt");
+
     return 1;
 }
+

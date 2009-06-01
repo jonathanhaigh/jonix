@@ -11,7 +11,7 @@
 #define _SEM_H
 
 #include "system.h"
-#include "list.h"
+#include "util/list.h"
 
 /*  ----------------------------------------------------
  *  typedef struct:         sem_t

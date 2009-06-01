@@ -10,7 +10,7 @@
 #include "c/stdio.h"
 #include "c/stdarg.h"
 #include "c/stddef.h"
-#include "scrn.h"
+#include "devs/scrn.h"
 
 char digit_str_l[]    = "0123456789abcdef";
 char digit_str_u[]    = "0123456789ABCDEF";
@@ -81,6 +81,84 @@ DEFINE_NUM2STR(16, int,  2, u)
 DEFINE_NUM2STR(16, long, 20, l)
 DEFINE_NUM2STR(16, long, 20, u)
 
+/*  ----------------------------------------------------
+ *  Function:       long2str_10h
+ *  --------------------------------------------------*/
+void long2str_10h(char *dest, unsigned long num, unsigned char precision){
+    /*
+     * TODO: Add a max length argument
+     */
+
+    char need_plus  = 0;
+
+    if(precision && num >= 1073741824){ 
+        /* 1GB */
+
+        int2str_10l(dest, num/1073741824);
+        num         %= 1073741824;
+
+        while(*dest != 0){
+            dest++;
+        }
+        *(dest++)   = 'G';
+
+        precision--;
+        need_plus   = 1;
+    }
+
+    if(precision && num >= 1048576){ 
+
+        if(need_plus){
+            *(dest++)   = '+';
+        }
+
+        int2str_10l(dest, num/1048576);
+        num         %= 1048576;
+
+        while(*dest != 0){
+            dest++;
+        }
+        *(dest++)   = 'M';
+
+        precision--;
+        need_plus   = 1;
+    }
+    
+    if(precision && num >= 1024){
+        /* 1kB */
+        if(need_plus){
+            *(dest++)   = '+';
+        }
+
+        int2str_10l(dest, num/1024);
+        num         %= 1024;
+
+        while(*dest != 0){
+            dest++;
+        }
+        *dest       = 'k';
+        *(++dest)   = 0;
+
+        precision--;
+        need_plus   = 1;
+    }
+
+    if(precision && num >= 0){
+        /* 1kB */
+        if(need_plus){
+            *(dest++)   = '+';
+        }
+
+        int2str_10l(dest, num);
+        need_plus   = 1;
+    }
+
+    if(!need_plus){
+        *(dest++)   = '0';
+        *dest       = 0;
+    }
+}
+
 #define SPRINT_C(c)             \
     tmp_char    = (c);          \
     if(buffer == NULL){         \
@@ -131,6 +209,13 @@ static int _printf_helper(char *buffer, size_t size, const char *format, va_list
 
             case 'X': SPRINT_N(int, 16, u); break;
 
+            case 'H': 
+                // TODO: use var size formats here
+                //
+                long2str_10h(tmp_str, va_arg(ap, int), 10);
+                SPRINT_S(tmp_str);
+                break;
+
             case 's':
                 tmp_ptr = va_arg(ap, char *);
                 SPRINT_S(tmp_ptr);
@@ -152,7 +237,7 @@ int vsnprintf(char *buffer, size_t size, const char *format, va_list ap){
 
 int snprintf(char *buffer, size_t size, const char *format, ...){
   va_list ap;
-  int retval = 0;
+  int retval;
   
   va_start(ap, format);
   retval = vsnprintf(buffer, size, format, ap);
@@ -167,7 +252,7 @@ int vprintf(const char *format, va_list ap){
 
 int printf(const char *format, ...){
     va_list ap;
-    int retval  = 0;
+    int retval;
     va_start(ap, format);
     retval  = vprintf(format, ap);
     va_end(ap);

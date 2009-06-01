@@ -8,8 +8,10 @@
 * --------------------------------------------------*/
 
 #include "mem.h"
-#include "string.h"
-#include "scrn.h"
+#include "c/string.h"
+#include "devs/scrn.h"
+#include "util/sort.h"
+#include "util/oarray.h"
 
 char heap_err[ERR_STR_SIZE];
 
@@ -32,7 +34,7 @@ heap_t *heap_place(void *start, int no_pages, bool rw, bool user){
     /* Heap must be big enough */
     if( 4096*no_pages < 
             (sizeof(heap_t)                     // heap data structure
-            + HEAP_INDEX_SIZE*sizeof(atype_t))  // heap index
+            + HEAP_INDEX_SIZE*sizeof(list_item_t))  // heap index
             + 4096                              // extra page for page table if needed
             + MIN_HEAP_SIZE                     // the actual heap 
     ){
@@ -42,8 +44,8 @@ heap_t *heap_place(void *start, int no_pages, bool rw, bool user){
 
     heap_t *heap    = (heap_t *) start;
     start          += sizeof(heap_t);
-    heap->index     = oarray_place(start, heap_index_sort, HEAP_INDEX_SIZE);
-    start          += HEAP_INDEX_SIZE*(sizeof(atype_t));
+    heap->index     = oarray_place(start, heap_hdr_t_cmp_size, HEAP_INDEX_SIZE);
+    start          += HEAP_INDEX_SIZE*(sizeof(list_item_t));
 
     heap->start     = start;
     heap->end       = end;
@@ -63,7 +65,7 @@ heap_t *heap_place(void *start, int no_pages, bool rw, bool user){
     ftr->magic      = HEAP_FTR_MAGIC;
 
     /* Add block to the heap index */
-    oarray_insert(&heap->index, (atype_t) hdr);
+    oarray_add(&heap->index, (list_item_t) hdr);
 
     return heap;
 }
@@ -96,7 +98,7 @@ bool heap_extend(heap_t *heap, int no_pages){
 
     /* Add block to the heap index
      */
-    if(!oarray_insert(&heap->index, (atype_t) hdr)){
+    if(!oarray_add(&heap->index, (list_item_t) hdr)){
         strcpy(heap_err, "Failed to add new block to heap index.");
         return 0;    
     }
@@ -122,9 +124,17 @@ void * heap_alloc(heap_t *heap, uint32_t size, bool page_align){
 
     int i;
     heap_hdr_t *hdr;
+    heap_ftr_t *ftr;
     for(i=0; i<heap->index.size; i++){
         hdr   = (heap_hdr_t *) heap->index.array[i];
         if(hdr->size >= size_hf){
+
+            //printf("Found block of suitable size. start=%H, size=%H, end=%H.\n", (uint32_t) hdr, hdr->size, (uint32_t)hdr + hdr->size);
+
+            // Save the block's footer address for later
+            //
+            ftr = (heap_ftr_t *)((uint32_t) hdr + hdr->size - sizeof(heap_ftr_t));
+
 
             if(
                 // Do we need to page align?
@@ -150,9 +160,9 @@ void * heap_alloc(heap_t *heap, uint32_t size, bool page_align){
 
                 // Delete this block from the heap index.
                 // 
-                oarray_delete(&heap->index, i);
+                oarray_del(&heap->index, i);
 
-                heap_hdr_t * new_hdr    = (heap_hdr_t *) (next_page - sizeof(heap_hdr_t));
+                heap_hdr_t *new_hdr    = (heap_hdr_t *) (next_page - sizeof(heap_hdr_t));
 
                 /* We need to remove the chunk of the block that
                  * is before the page boundary. If it is too small
@@ -168,11 +178,8 @@ void * heap_alloc(heap_t *heap, uint32_t size, bool page_align){
 
                     // Check if there actually is a previous block
                     //
-                    if(
-                        (uint32_t)hdr - sizeof(heap_ftr_t) - sizeof(heap_hdr_t)
-                        < 
-                        (uint32_t) heap->start
-                    ){
+                    if((uint32_t)hdr - sizeof(heap_ftr_t) - sizeof(heap_hdr_t) < (uint32_t) heap->start){
+
                         // There is no previous block. We will just
                         // discard the spare memory (until the whole heap is freed).
                         // This is not too bad because this should not happen very often.
@@ -180,13 +187,16 @@ void * heap_alloc(heap_t *heap, uint32_t size, bool page_align){
                         memset(hdr, 0, offset);
                         
                         // We can now continue as normal (as if we did not need
-                        // to page align), so long as we set hdr to point to *new_hdr
+                        // to page align), so long as we set hdr to point to new_hdr
                         // and create a new header for the block.
+                        // We also need to tell the footer of the block to point to 
+                        // the new header (new_hdr)
                         //
-                        hdr         = new_hdr;
-                        hdr->size   = new_size;
-                        hdr->hole   = 1;
-                        hdr->magic  = HEAP_HDR_MAGIC;
+                        ftr->hdr        = new_hdr;
+                        hdr             = new_hdr;
+                        hdr->size       = new_size;
+                        hdr->hole       = 1;
+                        hdr->magic      = HEAP_HDR_MAGIC;
                     }
                     else{
 
@@ -195,9 +205,7 @@ void * heap_alloc(heap_t *heap, uint32_t size, bool page_align){
                         // (not a hole), so the space cannot be claimed until the
                         // previous block is freed.
                         //
-                        heap_ftr_t *prev_ftr  = (heap_ftr_t *)(
-                            (uint32_t) hdr - sizeof(heap_ftr_t)
-                        );
+                        heap_ftr_t *prev_ftr  = (heap_ftr_t *)((uint32_t) hdr - sizeof(heap_ftr_t));
 
                         // Check the prev ftr's magic number.
                         //
@@ -211,16 +219,14 @@ void * heap_alloc(heap_t *heap, uint32_t size, bool page_align){
 
                         // Move the prev blocks footer.
                         // 
-                        memmove(
-                            new_hdr - sizeof(heap_ftr_t),
-                            prev_ftr,
-                            sizeof(heap_ftr_t)
-                        );
+                        memmove(new_hdr - sizeof(heap_ftr_t), prev_ftr, sizeof(heap_ftr_t));
                         //
                         // We can now continue as normal (as if we did not need
                         // to page align), so long as we set hdr to point to *new_hdr
-                        // and create a new header for the block.
+                        // and create a new header for the block. We also need to
+                        // update the block's footer to point to new_hdr.
                         //
+                        ftr->hdr    = new_hdr;
                         hdr         = new_hdr;
                         hdr->size   = new_size;
                         hdr->hole   = 1;
@@ -236,20 +242,20 @@ void * heap_alloc(heap_t *heap, uint32_t size, bool page_align){
                     //
                     hdr->size   = offset;
 
-                    heap_ftr_t * new_prev_ftr    = (heap_ftr_t *)(
-                        (uint32_t *) new_hdr - sizeof(heap_ftr_t)
-                    );
+                    heap_ftr_t * new_prev_ftr = (heap_ftr_t *)((uint32_t)new_hdr - sizeof(heap_ftr_t));
                     new_prev_ftr->hdr  = hdr;
                     new_prev_ftr->magic = HEAP_FTR_MAGIC;
 
                     // Add the new block to the heap index.
                     //
-                    oarray_insert(&heap->index, hdr);
+                    oarray_add(&heap->index, hdr);
 
                     // We can now continue as normal (as if we did not need
                     // to page align), so long as we set hdr to point to *new_hdr
-                    // and create a new header for the block.
+                    // and create a new header for the block. We also need to 
+                    // update the footer for the block to point to new_header.
                     //
+                    ftr->hdr    = new_hdr;
                     hdr         = new_hdr;
                     hdr->size   = new_size;
                     hdr->hole   = 1;
@@ -260,7 +266,7 @@ void * heap_alloc(heap_t *heap, uint32_t size, bool page_align){
                 // We did not have to page align, so this block is definitely
                 // suitable. We need to delete it from the heap index.
                 //
-                oarray_delete(&heap->index, i);
+                oarray_del(&heap->index, i);
             }
             
             /*
@@ -280,6 +286,7 @@ void * heap_alloc(heap_t *heap, uint32_t size, bool page_align){
             // and some extra space, then we give the whole block away.
             //
             if(hdr->size <= size_hf + sizeof(heap_hdr_t) + sizeof(heap_ftr_t)){
+                //printf("Allocating whole block\n");
                 hdr->hole   = 0;
                 return hdr_v + sizeof(heap_hdr_t);
             }
@@ -290,6 +297,8 @@ void * heap_alloc(heap_t *heap, uint32_t size, bool page_align){
             hdr->size       = size_hf;
 
             hdr->hole       = 0;
+
+            //printf("Reducing block size to %H. New end=%H\n", hdr->size, (uint32_t)hdr + hdr->size);
 
             // Create new footer
             //
@@ -303,15 +312,15 @@ void * heap_alloc(heap_t *heap, uint32_t size, bool page_align){
             hdr2->hole          = 1;
             hdr2->size          = old_size - size_hf;
             hdr2->magic         = HEAP_HDR_MAGIC;
+            //printf("Creating new block. start=%H, size=%H, end=%H.\n", (uint32_t)hdr2, hdr2->size, (uint32_t)hdr2 + hdr2->size);
 
             // Update old footer
             //
-            heap_ftr_t *ftr2    = (heap_ftr_t *) (hdr_v + old_size - sizeof(heap_ftr_t));
-            ftr2->hdr           = hdr2;
+            ftr->hdr    = hdr2;
 
             // Update heap index
             //
-            oarray_insert(&heap->index, hdr2);
+            oarray_add(&heap->index, hdr2);
 
             return hdr_v + sizeof(heap_hdr_t);
         }
@@ -322,9 +331,9 @@ void * heap_alloc(heap_t *heap, uint32_t size, bool page_align){
     //
     int no_new_pages    = (size_hf / 4096) + ((size_hf % 4096)? 1 : 0);
 
-    if(!heap_extend(heap, no_new_pages)){
-        return NULL;
-    }
+    //printf("No suitable blocks. Extending heap by %d pages\n", no_new_pages);
+
+    if(!heap_extend(heap, no_new_pages)) return NULL;
 
     // Heap was extended so try again.
     //
@@ -408,7 +417,7 @@ bool heap_free(heap_t *heap, void *addr){
 
             /* Update heap index
              */
-            oarray_delete_value(&heap->index, (atype_t) prev_hdr);
+            oarray_del_value(&heap->index, (list_item_t) prev_hdr);
 
             hdr     = prev_hdr;
             ftr     = prev_ftr;
@@ -442,14 +451,14 @@ bool heap_free(heap_t *heap, void *addr){
 
             /* Update heap index
              */
-            oarray_delete_value(&heap->index, (atype_t) next_hdr);
+            oarray_del_value(&heap->index, (list_item_t) next_hdr);
             ftr     = next_ftr;
         }
     }
 
     /* Add block to heap index
      */
-    if(!oarray_insert(&heap->index, hdr)){
+    if(!oarray_add(&heap->index, hdr)){
         strcpy(heap_err, "Failed to insert new block into heap index.");
         return 0;
     }
@@ -458,20 +467,11 @@ bool heap_free(heap_t *heap, void *addr){
 }
 
 /*  ----------------------------------------------------
- *  Function:           heap_index_sort
+ *  Function:           heap_hdr_t_cmp_size
  *
- *  This is the function to be used to keep a heap index
- *  table in order of size.
+ *  Comparison function to sort the heap index.
  *  --------------------------------------------------*/
-char heap_index_sort(atype_t a, atype_t b){
-
-    // a and b are void pointers to heap headers.
-    //
-    heap_hdr_t *ah   = (heap_hdr_t *) a;
-    heap_hdr_t *bh   = (heap_hdr_t *) b;
-
-    return ah->size - bh->size;
-}
+DEFINE_CMP_MEMBER(heap_hdr_t, size, uint32_t, 1)
 
 /*  ----------------------------------------------------
  *  Function:           heap_print_info

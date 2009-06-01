@@ -13,9 +13,10 @@
  *  Function:       outb
  *  --------------------------------------------------*/
 void outb(uint16_t port, unsigned char data){
-    __asm__ __volatile__(
+    asm volatile(
         "outb %1, %0"
-        : : "dN" (port), "a" (data)
+        :
+        : "dN" (port), "a" (data)
     );
 }
 
@@ -27,7 +28,7 @@ unsigned char inb(uint16_t port){
 
     unsigned char retval;
 
-    __asm__ __volatile__(
+    asm volatile(
         "inb %1, %0"
         : "=a" (retval)
         : "dN" (port)
@@ -42,9 +43,10 @@ unsigned char inb(uint16_t port){
  *  Sends a word to a port.
  *  --------------------------------------------------*/
 void outw(uint16_t port, uint16_t data){
-    __asm__ __volatile__(
+    asm volatile(
         "outw %1, %0"
-        : : "dN" (port), "a" (data)
+        :
+        : "dN" (port), "a" (data)
     );
 }
 
@@ -58,7 +60,7 @@ uint16_t inw(uint16_t port){
 
     uint16_t retval;
 
-    __asm__ __volatile__(
+    asm volatile(
         "inw %1, %0"
         : "=a" (retval)
         : "dN" (port)
@@ -73,9 +75,10 @@ uint16_t inw(uint16_t port){
  *  Sends two words to a port.
  *  --------------------------------------------------*/
 void outl(uint16_t port, uint32_t data){
-    __asm__ __volatile__(
+    asm volatile(
         "outl %1, %0"
-        : : "dN" (port), "a" (data)
+        :
+        : "dN" (port), "a" (data)
     );
 }
 
@@ -88,7 +91,7 @@ uint32_t inl(uint16_t port){
 
     uint32_t retval;
 
-    __asm__ __volatile__(
+    asm volatile(
         "inl %1, %0"
         : "=a" (retval)
         : "dN" (port)

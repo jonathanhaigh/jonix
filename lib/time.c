@@ -8,6 +8,7 @@
 * --------------------------------------------------*/
 
 #include "time.h"
+#include "thr.h"
 #include "sched.h"
 #include "io.h"
 #include "irq.h"
@@ -19,7 +20,7 @@
 
 #define TIME_IRQ_FREQ 100   /* Default frequency of IRQ0s */
 
-long time_ticks = 0; /* Incremented 1000 times per second */
+uint32_t time_ticks = 0; /* Incremented 1000 times per second */
 
 /*  ----------------------------------------------------
  *  Function:       time_init
@@ -79,20 +80,61 @@ void time_init(){
 /*  ----------------------------------------------------
  *  Function:       time_irq_handler
  *  --------------------------------------------------*/
-void time_irq_handler(isr_stack_t *r){
+void time_irq_handler(void *stack){
 
     time_ticks++;
 
-    resched(*r);
+    thr_current->state  = THR_STATE_READY;
+    olist_add(&thr_ready, thr_current);
+
+    // Check if any sleeping threads need to wake up.
+    //
+    while(thr_sleep.first != NULL && ((sleep_entry_t *) thr_sleep.first->value)->time <= time_ticks){
+
+
+        thread_t *thread    = ((sleep_entry_t *) olist_del(&thr_sleep, 0))->thread;
+        thread->state       = THR_STATE_READY;
+
+        printf("Waking up thread \"%s\".\n", thread->name);
+        
+
+        if(!olist_add(&thr_ready, thread)){
+            PANIC("Failed to add waking thread to ready threads list.");
+        }
+
+        thread_t *thr;
+        printf("Ready threads:\n");
+        FOREACH(thr, &thr_ready) printf("%s\n", thr->name);
+
+        sleep_entry_t *slp;
+        printf("Sleeping threads:\n");
+        FOREACH(slp, &thr_sleep) printf("%s\n", slp->thread->name);
+
+    }
+
+    // resched will never return so we must send the
+    // end of interrupt signal to the PIC now.
+    //
+    irq_end_of_interrupt(((isr_stack_kernel_t *)stack)->int_no);
+
+
+    resched(stack);
 }
 
 
 /*  ----------------------------------------------------
- *  Function:       sleep
+ *  Function:       syscall_sleep
  *  --------------------------------------------------*/
-void sleep(int no, char units){
+void syscall_sleep(void *stack_v){
+    // TODO: use POSIX return values: http://www.opengroup.org/onlinepubs/009695399/toc.htm
+    //
+
+    isr_stack_kernel_t *stack   = stack_v;
+
+    uint32_t no     = stack->ebx;
+    uint32_t units  = stack->ecx;
     
-    int targ_ticks;
+    uint32_t targ_ticks;
 
     switch(units){
         case 'm': targ_ticks    = time_ticks + no;      break;   /* miliseconds */
@@ -100,5 +142,18 @@ void sleep(int no, char units){
         case 'd': targ_ticks    = time_ticks + 100*no;  break;   /* deciseconds */
         case 's': targ_ticks    = time_ticks + 1000*no; break;   /* seconds */
     }
-    while(time_ticks < targ_ticks);
+    
+    sleep_entry_t *ent  = kmalloc(sizeof(sleep_entry_t));
+    MALLOC_PANIC(ent);
+
+    ent->thread = thr_current;
+    ent->time   = targ_ticks;
+
+    thr_current->state  = THR_STATE_SLEEP;
+    olist_add(&thr_sleep, ent);
+
+    printf("Adding thead \"%s\" to the sleep list.\n", thr_current->name);
+
+    resched(stack);
 }
+

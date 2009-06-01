@@ -1,18 +1,19 @@
 /* ---------------------------------------------------
 * Jonix
 *
-* thr.h
+* sched.h
 *
 * Author(s): Jonathan Haigh
 * Last edited by: Jonathan Haigh
 * --------------------------------------------------*/
 
-#ifndef _THR_H
-#define _THR_H
+#ifndef _SCHED_H
+#define _SCHED_H
 
 #include "system.h"
 #include "isr.h"
 
-extern void resched(isr_stack_t regs);
+extern void resched(void *stack);
+extern void resched_no_int();
 
 #endif

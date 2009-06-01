@@ -7,8 +7,8 @@
 * Last edited by: Jonathan Haigh
 * --------------------------------------------------*/
 
-#ifndef STDIO_H
-#define STDIO_H
+#ifndef _STDIO_H
+#define _STDIO_H
 
 #include "c/stdarg.h"
 #include "c/stddef.h"

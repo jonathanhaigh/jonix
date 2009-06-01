@@ -16,13 +16,13 @@ extern void irq_4(); extern void irq_5(); extern void irq_6(); extern void irq_7
 extern void irq_8(); extern void irq_9(); extern void irq_10(); extern void irq_11();
 extern void irq_12(); extern void irq_13(); extern void irq_14(); extern void irq_15();
 
-/* This is an array of function pointers */
-void *irq_handlers[]  = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+isr_handler_t irq_handlers[]  = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
 
 /*  ----------------------------------------------------
  *  Function:       irq_set_handler
  *  --------------------------------------------------*/
-void irq_set_handler(int irq, void (*handler)(isr_stack_t *r) ){
+void irq_set_handler(int irq, isr_handler_t handler){
     irq_handlers[irq]   = handler;
 }
 
@@ -82,25 +82,27 @@ void irq_init(){
 /*  ----------------------------------------------------
  *  Function:       irq_handler
  *  --------------------------------------------------*/
-void irq_handler(isr_stack_t *r){
+void irq_handler(isr_stack_kernel_t *stack){
 
-    void (*handler)(isr_stack_t *r);
+    isr_handler_t handler = irq_handlers[stack->int_no];
 
-    handler = irq_handlers[r->int_no];
+    if(handler != NULL) handler(stack);
 
-    if(handler != NULL){
-        handler(r);
-    }
+    irq_end_of_interrupt(stack->int_no);
 
+}
+ 
+
+/*  ----------------------------------------------------
+ *  Function:       irq_end_of_interrupt
+ *  --------------------------------------------------*/
+void irq_end_of_interrupt(uint32_t int_no){
      /* If the IDT entry that was invoked was greater than 40
     *  (meaning IRQ8 - 15), then we need to send an EOI to
     *  the slave controller */
-    if(r->int_no >= 40){
-        outb(0xA0, 0x20);
-    }
+    if(int_no >= 40) outb(0xA0, 0x20);
 
     /* In either case, we need to send an EOI to the master
     *  interrupt controller too */
     outb(0x20, 0x20);
 }
- 

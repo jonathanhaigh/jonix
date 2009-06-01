@@ -7,8 +7,8 @@
 * Last edited by: Jonathan Haigh
 * --------------------------------------------------*/
 
-#include "string.h"
-#include "stdint.h"
+#include "c/string.h"
+#include "c/stdint.h"
 
 /*  ----------------------------------------------------
  *  Function:       memcpy
@@ -92,13 +92,13 @@ void * memset_w(void *dest, int val, size_t count){
 /*  ----------------------------------------------------
  *  Function:       strlen
  *  --------------------------------------------------*/
-size_t strlen(const char *cs){
+size_t strlen(const char *str){
 
     size_t len  = 0;
 
-    while(*cs != NULL){
+    while(*str != '\0'){
         len++;
-        cs++;
+        str++;
     }
 
     return len;
@@ -108,16 +108,57 @@ size_t strlen(const char *cs){
 /*  ----------------------------------------------------
  *  Function:       strcpy
  *  --------------------------------------------------*/
-char *strcpy(char *s1, const char *s2){
+char *strcpy(char *dest, const char *src){
 
     int i;
 
-    for( i=0 ; *(s2+i) != NULL ; i++ ){
-        *(s1+i) = *(s2+i);
+    for(i=0; *(src+i) != '\0'; i++){
+        *(dest+i) = *(src+i);
     }
 
-    /* Add the null byte */
-    *(s1+i+1)   = NULL;
+    *(dest+i)   = '\0';
 
-    return s1;
+    return dest;
+}
+
+
+/*  ----------------------------------------------------
+ *  Function:       strcpy_n
+ *  --------------------------------------------------*/
+char *strcpy_n(char *dest, const char *src, size_t max_len){
+
+    int i;
+
+    for(i=0; i < max_len-1 && *(src+i) != '\0'; i++){
+        *(dest+i) = *(src+i);
+    }
+
+    *(dest+i)   = '\0';
+
+    return dest;
+}
+
+
+/*  ----------------------------------------------------
+ *  Function:       strcat
+ *  --------------------------------------------------*/
+char *strcat(char *dest, const char *src){
+    return strcpy(dest + strlen(dest), src);
+}
+
+
+/*  ----------------------------------------------------
+ *  Function:       strcmp
+ *  --------------------------------------------------*/
+int strcmp(const char *s1, const char *s2){
+
+    int i;
+    for(i=0; 1; i++){
+
+        if(s1[i] == '\0' && s2[i] == '\0') return 0;
+
+        if((unsigned char) s1[i] != (unsigned char) s2[i]){
+            return (unsigned char) s1[i] - (unsigned char) s2[i];
+        }
+    }
 }

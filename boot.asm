@@ -7,26 +7,31 @@
 ; Last edited by: Jonathan Haigh
 ; ---------------------------------------------------
 
-; NOTE: this code is taken from osdev.org's 'Barebones' tutorial and 'Bran's Kernel
+; NOTE: some of this code is adapted from osdev.org's 'Barebones' tutorial and 'Bran's Kernel
 ; Development Tutorial' @ http://osdever.net/bkerndev/Docs/. I'm guessing it's free
 ; code.
+
 [BITS 32]
 
 global loader           ; making entry point visible to linker
 global gdt_flush        ; Allows the C code to link to this
 global enable_paging
 global kmem_stack
-; isr_n (0<=n<=31) are also made global, but dynamically, later
+global end_of_isr
+global syscall_enter
+; isr_n (0<=n<=31) are also made global, but with a macro, later
 
 
 extern main
 extern gdt_ptr          ; GDT Pointer struct.
-extern fault_handler    ; C func that handles faults.
-extern irq_handler      ; C func that handles IRQ interrupts
+extern isr_handler
+extern irq_handler
+extern syscall_handler
+extern resched
 extern kpage_dir        ; The kernel's page directory
-extern tss_0            ; Address of TSS for ring 0
+extern tss_kernel            ; Address of TSS for ring 0
 
-STACKSIZE equ 0x4000          ; that's 16k.
+STACKSIZE equ 0x4000          ; that's 16k. KEEP CONSISTENT WITH KERNEL STACK SIZE MACRO IN C CODE
 
 ; setting up the Multiboot header - see GRUB docs for details
 MODULEALIGN equ  1<<0                   ; align loaded modules on page boundaries
@@ -51,11 +56,7 @@ loader:
    call  main                         ; call kernel proper
                hlt                    ; halt machine should kernel return
 
-; This will set up our new segment registers. We need to do
-; something special in order to set CS. We do what is called a
-; far jump. A jump that includes a segment as well as an offset.
-; This is declared in C as 'extern void gdt_flush();'
-
+; Installs GDT and sets code/data/stack segments
 gdt_flush:
     lgdt [gdt_ptr]     ; Tell the CPU where the GDT is.
 
@@ -78,12 +79,10 @@ gdt_flush:
     mov es, ax
     mov fs, ax
     mov gs, ax
-    mov ss, ax         ; Stack segment is a type of data segment so uses the
-                       ; same GDT entry as the data segments.
-
-                       ; We need to fill in the esp0 (stack pointer) entry 
-                       ; of the TSS before we get the CPU to load the TSS.
-    mov [tss_0+4], esp ; The esp0 entry in the TSS has an offset of 4 bytes.
+    mov ss, ax
+                            ; We need to fill in the esp0 (stack pointer) entry 
+                            ; of the kernel TSS before we get the CPU to load the TSS.
+    mov [tss_kernel+4], esp ; The esp0 entry in the TSS has an offset of 4 bytes.
 
     mov ax, 24         ; TSS descriptor has offset 3 in the GDT.
 
@@ -92,6 +91,7 @@ gdt_flush:
     jmp 8:flush2       ; Code segment has offset 1 in the GDT. We now do a far jump.
 flush2:
     ret                ; Returns back to the C code.
+
 
 ; Loads the IDT defined in 'idtp' into the processor.
 ; This is declared in C as 'extern void idt_load();'
@@ -103,10 +103,9 @@ idt_load:
 
 ; Set up Interrupt Service Routines for exceptions from the CPU
 ;
-%macro isr_noparams 1  ; Argument is the exception number
+%macro isr_noparams 1  ; Argument is the interrupt number
     global isr_%{1}
     isr_%{1}:
-        cli
         push byte 0         ; push a dummy variable on to the stack
         push byte %1
         jmp isr_common
@@ -115,7 +114,6 @@ idt_load:
 %macro isr_params 1     ; Argument is the interrupt number
     global isr_%{1}
     isr_%{1}:
-        cli
         push byte %1
         jmp isr_common
 %endmacro
@@ -153,35 +151,44 @@ isr_noparams 29
 isr_noparams 30
 isr_noparams 31
 
-isr_common:
+%macro interrupt_enter 0
     pusha
     push ds
     push es
     push fs
     push gs
-    mov ax, 0x10   ; Load the Kernel Data Segment descriptor!
+    mov ax, 0x10   ; Load the Kernel Data Segment descriptor
     mov ds, ax
     mov es, ax
     mov fs, ax
     mov gs, ax
     mov eax, esp   ; Push us the stack
     push eax
-    mov eax, fault_handler
-    call eax       ; A special call, preserves the 'eip' register
+%endmacro
+
+%macro interrupt_leave 0
     pop eax
     pop gs
     pop fs
     pop es
     pop ds
     popa
-    add esp, 8     ; Cleans up the pushed error code and pushed ISR number
-    iret           ; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP!
+    add esp, 8     ; Cleans up the pushed error code and pushed interrupt number
+    iret
+%endmacro
+
+
+isr_common:
+    interrupt_enter
+    mov eax, isr_handler
+    call eax
+end_of_isr:
+    interrupt_leave
 
 
 %macro irq_noparams 1  ; Argument is the IRQ number
     global irq_%{1}
     irq_%{1}:
-        cli
         push byte 0         ; push a dummy variable on to the stack
         push byte %1
         jmp irq_common
@@ -204,31 +211,21 @@ irq_noparams 13;
 irq_noparams 14;
 irq_noparams 15;
 
-; This is a stub that we have created for IRQ based ISRs. This calls
-; 'irq_handler' in our C code. We need to create this in an 'irq.c'
+
 irq_common:
-    pusha
-    push ds
-    push es
-    push fs
-    push gs
-    mov ax, 0x10
-    mov ds, ax
-    mov es, ax
-    mov fs, ax
-    mov gs, ax
-    mov eax, esp
-    push eax
+    interrupt_enter
     mov eax, irq_handler
     call eax
-    pop eax
-    pop gs
-    pop fs
-    pop es
-    pop ds
-    popa
-    add esp, 8
-    iret
+    interrupt_leave
+
+
+syscall_enter:
+    push 0
+    push 0x80
+    interrupt_enter
+    mov eax, syscall_handler
+    call eax
+    interrupt_leave
 
 enable_paging:
     ;push eax
@@ -240,6 +237,7 @@ enable_paging:
     ;pop eax
     hlt
     ret
+
 
 section .bss
 align 32
