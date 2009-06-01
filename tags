@@ -1,0 +1,660 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.7	//
+ASM_FILES	Makefile	/^ASM_FILES=boot.asm$/;"	m
+ATA_ADD_ERR	lib/ata.h	18;"	d
+ATA_ALT_STATUS	lib/ata.h	40;"	d
+ATA_BASE_1	lib/ata.h	23;"	d
+ATA_BASE_2	lib/ata.h	24;"	d
+ATA_BASE_3	lib/ata.h	25;"	d
+ATA_BASE_4	lib/ata.h	26;"	d
+ATA_BM_CMD	lib/ata.h	44;"	d
+ATA_BM_PRDT_ADDR	lib/ata.h	46;"	d
+ATA_BM_STATUS	lib/ata.h	45;"	d
+ATA_CMD	lib/ata.h	39;"	d
+ATA_CMD_IDENTIFY_DEVICE	lib/ata.h	60;"	d
+ATA_CMD_IDENTIFY_DRIVE	lib/ata.h	59;"	d
+ATA_CMD_READ_SECTORS	lib/ata.h	61;"	d
+ATA_CTL	lib/ata.h	41;"	d
+ATA_CTL_HOB	lib/ata.h	55;"	d
+ATA_CTL_NO_INTS	lib/ata.h	57;"	d
+ATA_CTL_RESET	lib/ata.h	56;"	d
+ATA_CYL_HIGH	lib/ata.h	35;"	d
+ATA_CYL_LOW	lib/ata.h	33;"	d
+ATA_DATA	lib/ata.h	28;"	d
+ATA_DRIVE_ADDR	lib/ata.h	42;"	d
+ATA_DRIVE_SELECT	lib/ata.h	37;"	d
+ATA_ERR	lib/ata.h	29;"	d
+ATA_LBA_1	lib/ata.h	32;"	d
+ATA_LBA_2	lib/ata.h	34;"	d
+ATA_LBA_3	lib/ata.h	36;"	d
+ATA_PRINT_ERR	lib/ata.h	19;"	d
+ATA_SEC_CNT	lib/ata.h	30;"	d
+ATA_SEC_NUM	lib/ata.h	31;"	d
+ATA_STATUS	lib/ata.h	38;"	d
+ATA_STATUS_BSY	lib/ata.h	48;"	d
+ATA_STATUS_DF	lib/ata.h	50;"	d
+ATA_STATUS_DRQ	lib/ata.h	52;"	d
+ATA_STATUS_ERR	lib/ata.h	53;"	d
+ATA_STATUS_RDY	lib/ata.h	49;"	d
+ATA_STATUS_SRV	lib/ata.h	51;"	d
+ATA_WAIT_TIMEOUT	lib/ata.h	21;"	d
+BIT_0	lib/system.h	23;"	d
+BIT_1	lib/system.h	24;"	d
+BIT_2	lib/system.h	25;"	d
+BIT_3	lib/system.h	26;"	d
+BIT_4	lib/system.h	27;"	d
+BIT_5	lib/system.h	28;"	d
+BIT_6	lib/system.h	29;"	d
+BIT_7	lib/system.h	30;"	d
+BIT_8	lib/system.h	31;"	d
+CC	Makefile	/^CC=gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS=						\\$/;"	m
+CHECKSUM	boot.asm	/^CHECKSUM    equ -(MAGIC + FLAGS)        ; checksum required$/;"	d
+C_FILES	Makefile	/^C_FILES=				\\$/;"	m
+DB_H	lib/debug.h	11;"	d
+DB_HERE	lib/debug.h	15;"	d
+DEFINE_NUM2STR	lib/c/printf.c	37;"	d	file:
+ERR_STR_SIZE	lib/system.h	17;"	d
+FLAGS	boot.asm	/^FLAGS       equ  MODULEALIGN | MEMINFO  ; this is the Multiboot 'flag' field$/;"	d
+FOREACH	lib/list.h	17;"	d
+GetPCIClass1	lib/pci_dev_info.c	/^GetPCIClass1 ($/;"	f
+GetPCIClass3	lib/pci_dev_info.c	/^GetPCIClass3 ($/;"	f
+HEAP_FTR_MAGIC	lib/mem.h	24;"	d
+HEAP_HDR_MAGIC	lib/mem.h	23;"	d
+HEAP_INDEX_SIZE	lib/mem.h	21;"	d
+INCLUDE	Makefile	/^INCLUDE=					\\$/;"	m
+KBF_ALT	lib/kb.h	20;"	d
+KBF_CAPS	lib/kb.h	18;"	d
+KBF_CTL	lib/kb.h	19;"	d
+KBF_SHIFT	lib/kb.h	17;"	d
+KBF_SUP	lib/kb.h	21;"	d
+KB_BUFFER_SIZE	lib/kb.h	15;"	d
+KRB_ALTGR	lib/kb.h	22;"	d
+MAGIC	boot.asm	/^MAGIC       equ    0x1BADB002           ; 'magic number' lets bootloader find the header$/;"	d
+MALLOC_PANIC	lib/mem.h	16;"	d
+MAP	lib/util/util.h	18;"	d
+MEMINFO	boot.asm	/^MEMINFO     equ  1<<1                   ; provide memory map$/;"	d
+MIN_HEAP_SIZE	lib/mem.h	22;"	d
+MODULEALIGN	boot.asm	/^MODULEALIGN equ  1<<0                   ; align loaded modules on page boundaries$/;"	d
+MultiBootHeader	boot.asm	/^MultiBootHeader:$/;"	l
+NULL	lib/c/stddef.h	13;"	d
+OBJ_FILES	Makefile	/^OBJ_FILES=$(ASM_FILES:.asm=.o) $(C_FILES:.c=.o)$/;"	m
+PANIC	lib/system.h	19;"	d
+PCI_CLASS_IDS_LEN	lib/pci_dev_info.h	7142;"	d
+PCI_CONFIG_ADDRESS	lib/pci.c	25;"	d	file:
+PCI_CONFIG_DATA	lib/pci.c	26;"	d	file:
+PCI_DEV_IDS_LEN	lib/pci_dev_info.h	7045;"	d
+PCI_VENDOR_IDS_LEN	lib/pci_dev_info.h	1552;"	d
+PRINTF_BUFFER_SIZE	lib/c/stdio.h	16;"	d
+PTBL_ADD_ERR	lib/ptbl.h	19;"	d
+PTBL_PRINT_ERR	lib/ptbl.h	20;"	d
+SCREEN_HEIGHT	lib/scrn.c	17;"	d	file:
+SCREEN_WIDTH	lib/scrn.c	16;"	d	file:
+SPRINT_C	lib/c/printf.c	84;"	d	file:
+SPRINT_N	lib/c/printf.c	100;"	d	file:
+SPRINT_S	lib/c/printf.c	94;"	d	file:
+STACKSIZE	boot.asm	/^STACKSIZE equ 0x4000          ; that's 16k.$/;"	d
+STDARG_H	lib/c/stdarg.h	10;"	d
+STDIO_H	lib/c/stdio.h	11;"	d
+THR_CURR	lib/thr.h	19;"	d
+THR_KSTACK_SIZE	lib/thr.h	32;"	d
+THR_NAME_LEN	lib/thr.h	28;"	d
+THR_READY	lib/thr.h	20;"	d
+THR_SEM	lib/thr.h	21;"	d
+THR_SLEEP	lib/thr.h	23;"	d
+THR_SUSP	lib/thr.h	22;"	d
+TID_HASH_SIZE	lib/tid.h	16;"	d
+TID_MAX	lib/tid.h	15;"	d
+TIME_IRQ_FREQ	lib/time.c	20;"	d	file:
+TIME_PIT_0	lib/time.c	15;"	d	file:
+TIME_PIT_1	lib/time.c	16;"	d	file:
+TIME_PIT_2	lib/time.c	17;"	d	file:
+TIME_PIT_COMM	lib/time.c	18;"	d	file:
+VIDEO_MEMORY_BASE	lib/scrn.c	15;"	d	file:
+_ATA_H	lib/ata.h	10;"	d
+_GDT_H	lib/gdt.h	11;"	d
+_IDT_H	lib/idt.h	11;"	d
+_IO_H	lib/io.h	11;"	d
+_IRQ_H	lib/irq.h	11;"	d
+_ISR_H	lib/isr.h	11;"	d
+_KB_H	lib/kb.h	11;"	d
+_LIST_H	lib/list.h	11;"	d
+_MEM_H	lib/mem.h	11;"	d
+_OARRAY_H	lib/oarray.h	11;"	d
+_PCI_DEV_INFO_H	lib/pci_dev_info.h	32;"	d
+_PCI_H	lib/pci.h	11;"	d
+_PTBL_H	lib/ptbl.h	13;"	d
+_SCRN_H	lib/scrn.h	11;"	d
+_SEM_H	lib/sem.h	11;"	d
+_STDDEF_H	lib/c/stddef.h	11;"	d
+_STDINT_H	lib/c/stdint.h	11;"	d
+_STRING_H	lib/c/string.h	11;"	d
+_SYSTEM_BOOT_H	lib/system_boot.h	11;"	d
+_SYSTEM_H	lib/system.h	11;"	d
+_THR_H	lib/sched.h	11;"	d
+_THR_H	lib/thr.h	11;"	d
+_TID_H	lib/tid.h	11;"	d
+_TIME_H	lib/time.h	11;"	d
+_UTIL_H	lib/util/util.h	11;"	d
+_i	lib/util/util.h	/^int _i;$/;"	v
+_null_str	lib/pci.c	/^char _null_str[1];$/;"	v
+_printf_helper	lib/c/printf.c	/^static int _printf_helper(char *buffer, size_t size, const char *format, va_list ap){$/;"	f	file:
+access	lib/gdt.h	/^   uint8_t  access;$/;"	m	struct:__anon2
+active	lib/ptbl.h	/^    bool        active;$/;"	m	struct:__anon13
+addr_v2p	lib/mem.c	/^uint32_t addr_v2p(void *v){$/;"	f
+always0	lib/idt.h	/^    uint8_t always0;     \/* This will ALWAYS be set to 0! *\/$/;"	m	struct:__anon11
+array	lib/oarray.h	/^    atype_t     *array;$/;"	m	struct:__anon1
+ata_ctlr_find_devs	lib/ata.c	/^void ata_ctlr_find_devs(ata_ctlr_t *ctlr){$/;"	f
+ata_ctlr_get_error	lib/ata.c	/^void ata_ctlr_get_error(ata_ctlr_t *ctlr){$/;"	f
+ata_ctlr_print_status	lib/ata.c	/^void ata_ctlr_print_status(ata_ctlr_t *ctlr){$/;"	f
+ata_ctlr_reset	lib/ata.c	/^bool ata_ctlr_reset(ata_ctlr_t *ctlr){$/;"	f
+ata_ctlr_select_dev	lib/ata.c	/^void ata_ctlr_select_dev(ata_ctlr_t *ctlr, bool dev){$/;"	f
+ata_ctlr_t	lib/ata.h	/^} ata_ctlr_t;$/;"	t	typeref:struct:__anon9
+ata_ctlr_wait_bsy	lib/ata.c	/^bool ata_ctlr_wait_bsy(ata_ctlr_t *ctlr){$/;"	f
+ata_ctlr_wait_drq	lib/ata.c	/^bool ata_ctlr_wait_drq(ata_ctlr_t *ctlr){$/;"	f
+ata_ctlr_wait_not_bsy	lib/ata.c	/^bool ata_ctlr_wait_not_bsy(ata_ctlr_t *ctlr){$/;"	f
+ata_ctlr_wait_rdy	lib/ata.c	/^bool ata_ctlr_wait_rdy(ata_ctlr_t *ctlr){$/;"	f
+ata_ctlrs	lib/ata.c	/^ata_ctlr_t *ata_ctlrs[4];   \/\/ Array of pointers to ATA controllers.$/;"	v
+ata_dev_find_parts	lib/ata.c	/^bool ata_dev_find_parts(ata_ctlr_t *ctlr, bool devno){$/;"	f
+ata_dev_identify	lib/ata.c	/^bool ata_dev_identify(ata_ctlr_t *ctlr, uint8_t devno){$/;"	f
+ata_dev_print	lib/ata.c	/^void ata_dev_print(ata_dev_t * dev){$/;"	f
+ata_dev_t	lib/ata.h	/^} ata_dev_t;$/;"	t	typeref:struct:__anon7
+ata_devs	lib/ata.c	/^list_head_t ata_devs;       \/\/ List of ATA devices.$/;"	v
+ata_dma_lba28_read	lib/ata.c	/^bool ata_dma_lba28_read(ata_ctlr_t *ctlr, bool devno, uint32_t lba, uint8_t sec_cnt, void *buffer){$/;"	f
+ata_err	lib/ata.c	/^char ata_err[ERR_STR_SIZE];$/;"	v
+ata_find_devs	lib/ata.c	/^void ata_find_devs(){$/;"	f
+ata_init	lib/ata.c	/^void ata_init(){$/;"	f
+ata_irq_handler	lib/ata.c	/^void ata_irq_handler(isr_stack_t *r){$/;"	f
+ata_pio_lba28_read	lib/ata.c	/^bool ata_pio_lba28_read(ata_ctlr_t *ctlr, bool devno, uint32_t lba, uint8_t sec_cnt, void *buffer){$/;"	f
+ata_prd_t	lib/ata.h	/^} __attribute__((__packed__)) ata_prd_t;$/;"	t	typeref:struct:__anon8
+ata_prdt_new	lib/ata.c	/^ata_prd_t * ata_prdt_new(){$/;"	f
+atapi	lib/ata.h	/^    bool        atapi;          \/\/ Is this dev ATAPI?$/;"	m	struct:__anon7
+attribute	lib/scrn.c	/^volatile uint8_t attribute = 0x1F;$/;"	v
+atype_t	lib/oarray.h	/^typedef void * atype_t;$/;"	t
+bar0	lib/pci.h	/^    uint32_t    bar0;$/;"	m	struct:__anon6
+bar1	lib/pci.h	/^    uint32_t    bar1;$/;"	m	struct:__anon6
+bar2	lib/pci.h	/^    uint32_t    bar2;$/;"	m	struct:__anon6
+bar3	lib/pci.h	/^    uint32_t    bar3;$/;"	m	struct:__anon6
+bar4	lib/pci.h	/^    uint32_t    bar4;$/;"	m	struct:__anon6
+bar5	lib/pci.h	/^    uint32_t    bar5;$/;"	m	struct:__anon6
+base	lib/ata.h	/^    uint16_t    base;$/;"	m	struct:__anon9
+base	lib/gdt.h	/^    uint32_t    base;$/;"	m	struct:__anon3
+base	lib/idt.h	/^    uint32_t base;$/;"	m	struct:__anon12
+base_high	lib/gdt.h	/^   uint8_t  base_high;$/;"	m	struct:__anon2
+base_high	lib/idt.h	/^    uint16_t base_high;$/;"	m	struct:__anon11
+base_low	lib/gdt.h	/^   uint16_t base_low;$/;"	m	struct:__anon2
+base_low	lib/idt.h	/^    uint16_t base_low;$/;"	m	struct:__anon11
+base_mid	lib/gdt.h	/^   uint8_t  base_mid;$/;"	m	struct:__anon2
+bist	lib/pci.h	/^    uint8_t     bist;$/;"	m	struct:__anon6
+bool	lib/c/stddef.h	/^typedef char bool;  \/\/ This is not a standard C library definition.$/;"	t
+boot_device	lib/system_boot.h	/^    uint32_t    boot_device;$/;"	m	struct:__anon10
+buffer	lib/ata.h	/^    uint32_t    buffer;     \/\/ This is the PHYSICAL address of the data buffer.$/;"	m	struct:__anon8
+buffer_pos	lib/kb.c	/^unsigned char   buffer_pos;$/;"	v
+bus	lib/pci.h	/^    uint8_t     bus;$/;"	m	struct:__anon6
+busmaster	lib/ata.h	/^    uint32_t    busmaster;$/;"	m	struct:__anon9
+byte_cnt	lib/ata.h	/^    uint16_t    byte_cnt;      \/\/ Transfer size in bytes.$/;"	m	struct:__anon8
+cache_line_size	lib/pci.h	/^    uint8_t     cache_line_size;$/;"	m	struct:__anon6
+class_desc	lib/pci.h	/^    char        **class_desc;$/;"	m	struct:__anon6
+class_desc	lib/pci_dev_info.h	/^	char    *class_desc;$/;"	m	struct:__anon22
+class_id	lib/pci.h	/^    uint8_t     class_id;$/;"	m	struct:__anon6
+class_id	lib/pci_dev_info.h	/^	uint8_t class_id;$/;"	m	struct:__anon22
+cmdline	lib/system_boot.h	/^    uint32_t    cmdline;$/;"	m	struct:__anon10
+count	lib/sem.h	/^    signed int count;$/;"	m	struct:__anon17
+cpage_dir	lib/mem.c	/^page_dir_t      cpage_dir;       \/* Page directory currently in use (Physical) *\/$/;"	v
+cr3	lib/gdt.h	/^    uint32_t cr3;$/;"	m	struct:__anon4
+cr3	lib/thr.h	/^    uint32_t cr3;$/;"	m	struct:__anon5
+cs	lib/gdt.h	/^    uint16_t cs;$/;"	m	struct:__anon4
+cs	lib/isr.h	/^    uint32_t eip, cs, eflags, useresp, ss;$/;"	m	struct:__anon18
+cs	lib/thr.h	/^    uint16_t cs;$/;"	m	struct:__anon5
+cs_h	lib/gdt.h	/^    uint16_t cs_h;$/;"	m	struct:__anon4
+define_num2str	lib/util/string.c	30;"	d	file:
+desc	lib/pci.h	/^    char        **desc;$/;"	m	struct:__anon6
+desc	lib/pci_dev_info.h	/^	char        *desc;$/;"	m	struct:__anon21
+dev_id	lib/pci.h	/^    uint16_t    dev_id;$/;"	m	struct:__anon6
+dev_id	lib/pci_dev_info.h	/^	uint16_t    dev_id;$/;"	m	struct:__anon21
+devs	lib/ata.h	/^    ata_dev_t   *devs[2];       \/\/ Attached devices.$/;"	m	struct:__anon9
+digit_str	lib/util/string.c	/^char digit_str[]    = "0123456789abcdef";$/;"	v
+digit_str_l	lib/c/printf.c	/^char digit_str_l[]    = "0123456789abcdef";$/;"	v
+digit_str_u	lib/c/printf.c	/^char digit_str_u[]    = "0123456789ABCDEF";$/;"	v
+dma_sel	lib/ata.h	/^    uint8_t     dma_sel;        \/\/ Selected DMA modes$/;"	m	struct:__anon7
+dma_simplex	lib/ata.h	/^    bool        dma_simplex;    \/\/ Can use both devs at once?$/;"	m	struct:__anon9
+dma_sup	lib/ata.h	/^    uint8_t     dma_sup;        \/\/ Supported DMA modes$/;"	m	struct:__anon7
+ds	lib/gdt.h	/^    uint16_t ds;$/;"	m	struct:__anon4
+ds	lib/isr.h	/^    uint32_t gs, fs, es, ds;$/;"	m	struct:__anon18
+ds	lib/thr.h	/^    uint16_t ds;$/;"	m	struct:__anon5
+ds_h	lib/gdt.h	/^    uint16_t ds_h;$/;"	m	struct:__anon4
+eax	lib/gdt.h	/^    uint32_t eax;$/;"	m	struct:__anon4
+eax	lib/isr.h	/^    uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax;$/;"	m	struct:__anon18
+eax	lib/thr.h	/^    uint32_t eax;$/;"	m	struct:__anon5
+ebp	lib/gdt.h	/^    uint32_t ebp;$/;"	m	struct:__anon4
+ebp	lib/isr.h	/^    uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax;$/;"	m	struct:__anon18
+ebp	lib/thr.h	/^    uint32_t ebp;$/;"	m	struct:__anon5
+ebx	lib/gdt.h	/^    uint32_t ebx;$/;"	m	struct:__anon4
+ebx	lib/isr.h	/^    uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax;$/;"	m	struct:__anon18
+ebx	lib/thr.h	/^    uint32_t ebx;$/;"	m	struct:__anon5
+ecx	lib/gdt.h	/^    uint32_t ecx;$/;"	m	struct:__anon4
+ecx	lib/isr.h	/^    uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax;$/;"	m	struct:__anon18
+ecx	lib/thr.h	/^    uint32_t ecx;$/;"	m	struct:__anon5
+edi	lib/gdt.h	/^    uint32_t edi;$/;"	m	struct:__anon4
+edi	lib/isr.h	/^    uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax;$/;"	m	struct:__anon18
+edi	lib/thr.h	/^    uint32_t edi;$/;"	m	struct:__anon5
+edx	lib/gdt.h	/^    uint32_t edx;$/;"	m	struct:__anon4
+edx	lib/isr.h	/^    uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax;$/;"	m	struct:__anon18
+edx	lib/thr.h	/^    uint32_t edx;$/;"	m	struct:__anon5
+eflags	lib/gdt.h	/^    uint32_t eflags;$/;"	m	struct:__anon4
+eflags	lib/isr.h	/^    uint32_t eip, cs, eflags, useresp, ss;$/;"	m	struct:__anon18
+eflags	lib/thr.h	/^    uint32_t eflags;$/;"	m	struct:__anon5
+eip	lib/gdt.h	/^    uint32_t eip;$/;"	m	struct:__anon4
+eip	lib/isr.h	/^    uint32_t eip, cs, eflags, useresp, ss;$/;"	m	struct:__anon18
+eip	lib/thr.h	/^    uint32_t eip;$/;"	m	struct:__anon5
+enable_paging	boot.asm	/^enable_paging:$/;"	l
+end	lib/mem.h	/^    void        *end;$/;"	m	struct:__anon14
+eot	lib/ata.h	/^    uint8_t     eot;        \/\/ Set to 0x80 for end of table, 0x00 otherwise.$/;"	m	struct:__anon8
+err_code	lib/isr.h	/^    uint32_t int_no, err_code;$/;"	m	struct:__anon18
+es	lib/gdt.h	/^    uint16_t es;$/;"	m	struct:__anon4
+es	lib/isr.h	/^    uint32_t gs, fs, es, ds;$/;"	m	struct:__anon18
+es	lib/thr.h	/^    uint16_t es;$/;"	m	struct:__anon5
+es_h	lib/gdt.h	/^    uint16_t es_h;$/;"	m	struct:__anon4
+esi	lib/gdt.h	/^    uint32_t esi;$/;"	m	struct:__anon4
+esi	lib/isr.h	/^    uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax;$/;"	m	struct:__anon18
+esi	lib/thr.h	/^    uint32_t esi;$/;"	m	struct:__anon5
+esp	lib/gdt.h	/^    uint32_t esp;$/;"	m	struct:__anon4
+esp	lib/isr.h	/^    uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax;$/;"	m	struct:__anon18
+esp	lib/thr.h	/^    uint32_t esp;$/;"	m	struct:__anon5
+esp0	lib/gdt.h	/^    uint32_t esp0;$/;"	m	struct:__anon4
+esp1	lib/gdt.h	/^    uint32_t esp1;$/;"	m	struct:__anon4
+esp2	lib/gdt.h	/^    uint32_t esp2;$/;"	m	struct:__anon4
+exception_messages	lib/isr.c	/^char *exception_messages[] = {$/;"	v
+extern	boot.asm	/^extern fault_handler    ; C func that handles faults.$/;"	l
+extern	boot.asm	/^extern gdt_ptr          ; GDT Pointer struct.$/;"	l
+extern	boot.asm	/^extern idtp$/;"	l
+extern	boot.asm	/^extern irq_handler      ; C func that handles IRQ interrupts$/;"	l
+extern	boot.asm	/^extern kpage_dir        ; The kernel's page directory$/;"	l
+extern	boot.asm	/^extern main$/;"	l
+extern	boot.asm	/^extern tss_0            ; Address of TSS for ring 0$/;"	l
+fault_handler	lib/isr.c	/^void fault_handler(isr_stack_t *r){$/;"	f
+first	lib/list.h	/^    list_node_t *first;$/;"	m	struct:__anon19
+flags	lib/idt.h	/^    uint8_t flags;$/;"	m	struct:__anon11
+flags	lib/system_boot.h	/^    uint32_t    flags;$/;"	m	struct:__anon10
+flush2	boot.asm	/^flush2:$/;"	l
+fs	lib/gdt.h	/^    uint16_t fs;$/;"	m	struct:__anon4
+fs	lib/isr.h	/^    uint32_t gs, fs, es, ds;$/;"	m	struct:__anon18
+fs	lib/thr.h	/^    uint16_t fs;$/;"	m	struct:__anon5
+fs_h	lib/gdt.h	/^    uint16_t fs_h;$/;"	m	struct:__anon4
+fs_id	lib/ptbl.h	/^    uint8_t     fs_id;$/;"	m	struct:__anon13
+func	lib/pci.h	/^    uint8_t     func;$/;"	m	struct:__anon6
+gdt	lib/gdt.c	/^gdt_entry_t gdt[4];$/;"	v
+gdt_entry_t	lib/gdt.h	/^} __attribute__((__packed__)) gdt_entry_t;$/;"	t	typeref:struct:__anon2
+gdt_flush	boot.asm	/^gdt_flush:$/;"	l
+gdt_init	lib/gdt.c	/^void gdt_init(){$/;"	f
+gdt_ptr_t	lib/gdt.h	/^} __attribute__((__packed__)) gdt_ptr_t;$/;"	t	typeref:struct:__anon3
+gdt_set_entry	lib/gdt.c	/^void gdt_set_entry($/;"	f
+get_page_table_entry_flags	lib/mem.c	/^uint32_t get_page_table_entry_flags(uint32_t addr){$/;"	f
+global	boot.asm	/^global enable_paging$/;"	l
+global	boot.asm	/^global gdt_flush        ; Allows the C code to link to this$/;"	l
+global	boot.asm	/^global idt_load$/;"	l
+global	boot.asm	/^global kmem_stack$/;"	l
+global	boot.asm	/^global loader           ; making entry point visible to linker$/;"	l
+granularity	lib/gdt.h	/^   uint8_t  granularity;$/;"	m	struct:__anon2
+gs	lib/gdt.h	/^    uint16_t gs;$/;"	m	struct:__anon4
+gs	lib/isr.h	/^    uint32_t gs, fs, es, ds;$/;"	m	struct:__anon18
+gs	lib/thr.h	/^    uint16_t gs;$/;"	m	struct:__anon5
+gs_h	lib/gdt.h	/^    uint16_t gs_h;$/;"	m	struct:__anon4
+has_msg	lib/thr.h	/^    bool        has_msg;    \/\/ Does this proc\/thread have msg waiting $/;"	m	struct:__anon5
+hdr	lib/mem.h	/^    heap_hdr_t  *hdr;$/;"	m	struct:__anon16
+header_type	lib/pci.h	/^    uint8_t     header_type;$/;"	m	struct:__anon6
+heap_alloc	lib/heap.c	/^void * heap_alloc(heap_t *heap, uint32_t size, bool page_align){$/;"	f
+heap_err	lib/heap.c	/^char heap_err[ERR_STR_SIZE];$/;"	v
+heap_extend	lib/heap.c	/^bool heap_extend(heap_t *heap, int no_pages){$/;"	f
+heap_free	lib/heap.c	/^bool heap_free(heap_t *heap, void *addr){$/;"	f
+heap_ftr_t	lib/mem.h	/^} heap_ftr_t;$/;"	t	typeref:struct:__anon16
+heap_hdr_t	lib/mem.h	/^} heap_hdr_t;$/;"	t	typeref:struct:__anon15
+heap_index_sort	lib/heap.c	/^char heap_index_sort(atype_t a, atype_t b){$/;"	f
+heap_palloc	lib/heap.c	/^void * heap_palloc(heap_t *heap){$/;"	f
+heap_place	lib/heap.c	/^heap_t *heap_place(void *start, int no_pages, bool rw, bool user){$/;"	f
+heap_print_index	lib/heap.c	/^void heap_print_index(heap_t * heap){$/;"	f
+heap_print_info	lib/heap.c	/^void heap_print_info(heap_t * heap){$/;"	f
+heap_psalloc	lib/heap.c	/^void * heap_psalloc(heap_t *heap, uint16_t pages){$/;"	f
+heap_t	lib/mem.h	/^} heap_t;$/;"	t	typeref:struct:__anon14
+hole	lib/mem.h	/^    bool        hole;$/;"	m	struct:__anon15
+ide_ctlrs	lib/pci.c	/^list_head_t ide_ctlrs;$/;"	v
+idt	lib/idt.c	/^idt_entry_t idt[256];$/;"	v
+idt_entry_t	lib/idt.h	/^} __attribute__((packed)) idt_entry_t;$/;"	t	typeref:struct:__anon11
+idt_init	lib/idt.c	/^void idt_init(){$/;"	f
+idt_load	boot.asm	/^idt_load:$/;"	l
+idt_ptr_t	lib/idt.h	/^} __attribute__((packed)) idt_ptr_t;$/;"	t	typeref:struct:__anon12
+idt_set_entry	lib/idt.c	/^void idt_set_entry(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags){$/;"	f
+idtp	lib/idt.c	/^idt_ptr_t idtp;$/;"	v
+inb	lib/io.c	/^unsigned char inb(uint16_t port){$/;"	f
+index	lib/mem.h	/^    oarray_t    index;$/;"	m	struct:__anon14
+inl	lib/io.c	/^uint32_t inl(uint16_t port){$/;"	f
+int16_t	lib/c/stdint.h	/^typedef signed short    int16_t;$/;"	t
+int32_t	lib/c/stdint.h	/^typedef signed int      int32_t;$/;"	t
+int64_t	lib/c/stdint.h	/^typedef signed long     int64_t;$/;"	t
+int8_t	lib/c/stdint.h	/^typedef signed char     int8_t;$/;"	t
+int_line	lib/pci.h	/^    uint8_t     int_line;$/;"	m	struct:__anon6
+int_no	lib/isr.h	/^    uint32_t int_no, err_code;$/;"	m	struct:__anon18
+int_pin	lib/pci.h	/^    uint8_t     int_pin;$/;"	m	struct:__anon6
+intcmp_32	lib/oarray.c	/^char intcmp_32(atype_t a, atype_t b){$/;"	f
+inw	lib/io.c	/^uint16_t inw(uint16_t port){$/;"	f
+iomap	lib/gdt.h	/^    uint16_t iomap;$/;"	m	struct:__anon4
+irq_common	boot.asm	/^irq_common:$/;"	l
+irq_handler	lib/irq.c	/^void irq_handler(isr_stack_t *r){$/;"	f
+irq_handlers	lib/irq.c	/^void *irq_handlers[]  = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};$/;"	v
+irq_init	lib/irq.c	/^void irq_init(){$/;"	f
+irq_noparams	boot.asm	/^irq_noparams 0;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 10;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 11;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 12;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 13;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 14;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 15;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 1;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 2;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 3;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 4;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 5;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 6;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 7;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 8;$/;"	l
+irq_noparams	boot.asm	/^irq_noparams 9;$/;"	l
+irq_remap	lib/irq.c	/^void irq_remap(){$/;"	f
+irq_set_handler	lib/irq.c	/^void irq_set_handler(int irq, void (*handler)(isr_stack_t *r) ){$/;"	f
+irq_unset_handler	lib/irq.c	/^void irq_unset_handler(int irq){$/;"	f
+isr_common	boot.asm	/^isr_common:$/;"	l
+isr_init	lib/isr.c	/^void isr_init(){$/;"	f
+isr_noparams	boot.asm	/^isr_noparams 0$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 1$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 15$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 16$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 17$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 18$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 19$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 2$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 20$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 21$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 22$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 23$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 24$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 25$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 26$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 27$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 28$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 29$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 3$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 30$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 31$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 4$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 5$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 6$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 7$/;"	l
+isr_noparams	boot.asm	/^isr_noparams 9$/;"	l
+isr_params	boot.asm	/^isr_params 10$/;"	l
+isr_params	boot.asm	/^isr_params 11$/;"	l
+isr_params	boot.asm	/^isr_params 12$/;"	l
+isr_params	boot.asm	/^isr_params 13$/;"	l
+isr_params	boot.asm	/^isr_params 14$/;"	l
+isr_params	boot.asm	/^isr_params 8$/;"	l
+isr_stack_t	lib/isr.h	/^} __attribute__((__packed__)) isr_stack_t;$/;"	t	typeref:struct:__anon18
+join	lib/util/string.c	/^void join(char *dest, char **str_arr, unsigned int count, char delim){$/;"	f
+kb_buffer	lib/kb.c	/^char            kb_buffer[KB_BUFFER_SIZE+1];$/;"	v
+kb_err	lib/kb.c	/^char            kb_err[ERR_STR_SIZE];$/;"	v
+kb_flags	lib/kb.c	/^char            kb_flags;$/;"	v
+kb_handler	lib/kb.c	/^void kb_handler(isr_stack_t *r){$/;"	f
+kb_init	lib/kb.c	/^void kb_init(){$/;"	f
+kb_layout	lib/kb.c	/^char kb_layout[256];$/;"	v
+kb_layout_sh	lib/kb.c	/^char kb_layout_sh[256];$/;"	v
+kb_print_to_screen	lib/kb.c	/^bool            kb_print_to_screen;$/;"	v
+kb_read	lib/kb.c	/^unsigned char kb_read(){$/;"	f
+kb_reset	lib/kb.c	/^void kb_reset(){$/;"	f
+kb_status	lib/kb.c	/^char            kb_status;$/;"	v
+kfree	lib/mem.c	/^bool kfree(void *addr){$/;"	f
+kheap	lib/mem.c	/^heap_t          *kheap;     \/* The kernel's heap *\/$/;"	v
+kmalloc	lib/mem.c	/^void *kmalloc(uint32_t size){$/;"	f
+kmem_bss_start	lib/mem.c	/^void *kmem_bss_start    = &kmem_bss_start_var;$/;"	v
+kmem_data_start	lib/mem.c	/^void *kmem_data_start   = &kmem_data_start_var;$/;"	v
+kmem_end	lib/mem.c	/^void *kmem_end          = &kmem_end_var;$/;"	v
+kmem_rodata_start	lib/mem.c	/^void *kmem_rodata_start = &kmem_rodata_start_var;$/;"	v
+kmem_stack	boot.asm	/^kmem_stack:$/;"	l
+kmem_start	lib/mem.c	/^void *kmem_start        = &kmem_start_var;        $/;"	v
+kmem_text_start	lib/mem.c	/^void *kmem_text_start   = &kmem_text_start_var;$/;"	v
+kpage_dir	lib/mem.c	/^page_dir_t      kpage_dir;       \/* The kernel's page directory (Physical) *\/$/;"	v
+kpalloc	lib/mem.c	/^void *kpalloc(){$/;"	f
+kpalloc_at_v	lib/mem.c	/^bool kpalloc_at_v(uint32_t virt){$/;"	f
+kpfree_at_v	lib/mem.c	/^bool kpfree_at_v(uint32_t addr){$/;"	f
+kpsalloc	lib/mem.c	/^void *kpsalloc(uint16_t pages){$/;"	f
+kpsalloc_at_v	lib/mem.c	/^bool kpsalloc_at_v(uint32_t virt, int num){$/;"	f
+kstack_base	lib/thr.h	/^    uint32_t    kstack_base; \/\/ Kernel mode stack for this thr$/;"	m	struct:__anon5
+kstack_size	lib/thr.h	/^    uint32_t    kstack_size;$/;"	m	struct:__anon5
+last	lib/list.h	/^    list_node_t *last;$/;"	m	struct:__anon19
+latency	lib/pci.h	/^    uint8_t     latency;$/;"	m	struct:__anon6
+lba48	lib/ata.h	/^    bool        lba48;          \/\/ Use LBA48 addressing (instead of LBA28)$/;"	m	struct:__anon7
+ldt	lib/gdt.h	/^    uint16_t ldt;$/;"	m	struct:__anon4
+ldt_h	lib/gdt.h	/^    uint16_t ldt_h;$/;"	m	struct:__anon4
+limit	lib/gdt.h	/^    uint16_t    limit;$/;"	m	struct:__anon3
+limit	lib/idt.h	/^    uint16_t limit;$/;"	m	struct:__anon12
+limit_low	lib/gdt.h	/^   uint16_t limit_low;$/;"	m	struct:__anon2
+link	lib/gdt.h	/^    uint16_t link;$/;"	m	struct:__anon4
+link_h	lib/gdt.h	/^    uint16_t link_h;$/;"	m	struct:__anon4
+list_add	lib/list.c	/^bool list_add(list_head_t *list, list_item_t item){$/;"	f
+list_del	lib/list.c	/^list_item_t list_del(list_head_t *list, uint32_t index){$/;"	f
+list_free	lib/list.c	/^void list_free(list_head_t *list, bool free_values, bool free_head){$/;"	f
+list_get	lib/list.c	/^list_item_t list_get(list_head_t *list, uint32_t index){$/;"	f
+list_head_t	lib/list.h	/^} list_head_t;$/;"	t	typeref:struct:__anon19
+list_item_t	lib/list.h	/^typedef void * list_item_t; \/\/ Type of items stored in a list.$/;"	t
+list_new	lib/list.c	/^list_head_t list_new(){$/;"	f
+list_node	lib/list.h	/^struct list_node{$/;"	s
+list_node_t	lib/list.h	/^typedef struct list_node list_node_t;$/;"	t	typeref:struct:list_node
+loader	boot.asm	/^loader:$/;"	l
+long2str_10h	lib/util/string.c	/^void long2str_10h(char *dest, unsigned long num, unsigned char precision){$/;"	f
+magic	lib/mem.h	/^    uint32_t     magic;$/;"	m	struct:__anon16
+magic	lib/mem.h	/^    uint32_t    magic;$/;"	m	struct:__anon15
+main	main.c	/^int main(multiboot_info_t *mb_info){$/;"	f
+max_size	lib/oarray.h	/^    uint32_t    max_size;$/;"	m	struct:__anon1
+mem_err	lib/mem.c	/^char            mem_err[ERR_STR_SIZE];$/;"	v
+mem_init	lib/mem.c	/^void mem_init(){$/;"	f
+mem_lower	lib/system_boot.h	/^    uint32_t    mem_lower;$/;"	m	struct:__anon10
+mem_total	lib/mem.c	/^uint32_t mem_total;     $/;"	v
+mem_upper	lib/system_boot.h	/^    uint32_t    mem_upper;$/;"	m	struct:__anon10
+memcpy	lib/c/string.c	/^void * memcpy(void *dest, const void *src, size_t count){$/;"	f
+memmove	lib/c/string.c	/^void * memmove(void *dest, const void *src, size_t count){$/;"	f
+memset	lib/c/string.c	/^void * memset(void *dest, int val, size_t count){$/;"	f
+memset_w	lib/c/string.c	/^void * memset_w(void *dest, int val, size_t count){$/;"	f
+memstack1_base	lib/mem.c	/^void            *memstack1_base; \/* Stack of pages in memory at < 16M *\/$/;"	v
+memstack1_ptr	lib/mem.c	/^uint32_t        *memstack1_ptr;  \/* Points to current position in memstack1*\/$/;"	v
+memstack2_base	lib/mem.c	/^void            *memstack2_base; \/* Stack of pages in memory at >= 16M *\/$/;"	v
+memstack2_ptr	lib/mem.c	/^uint32_t        *memstack2_ptr;  \/* Points to current position in memstack2*\/$/;"	v
+model	lib/ata.h	/^    char        model[41];      \/\/ model$/;"	m	struct:__anon7
+mods_addr	lib/system_boot.h	/^    uint32_t    mods_addr;$/;"	m	struct:__anon10
+mods_count	lib/system_boot.h	/^    uint32_t    mods_count;$/;"	m	struct:__anon10
+ms1_ppalloc	lib/mem.c	/^uint32_t ms1_ppalloc(){$/;"	f
+ms2_ppalloc	lib/mem.c	/^uint32_t ms2_ppalloc(){$/;"	f
+multiboot_info_t	lib/system_boot.h	/^} __attribute__((__packed__)) multiboot_info_t;$/;"	t	typeref:struct:__anon10
+name	lib/pci.h	/^    char        **name;$/;"	m	struct:__anon6
+name	lib/pci_dev_info.h	/^	char        *name;$/;"	m	struct:__anon21
+name	lib/thr.h	/^    char        name[THR_NAME_LEN+1]; \/\/ process name$/;"	m	struct:__anon5
+next	lib/list.h	/^    struct list_node *next;$/;"	m	struct:list_node	typeref:struct:list_node::list_node
+null_str	lib/pci.c	/^char *null_str  = (char *) &_null_str;$/;"	v
+oarray_delete	lib/oarray.c	/^void oarray_delete(oarray_t *oarray, uint32_t index){$/;"	f
+oarray_delete_value	lib/oarray.c	/^bool oarray_delete_value(oarray_t *oarray, atype_t val){$/;"	f
+oarray_find_value	lib/oarray.c	/^int oarray_find_value(oarray_t *oarray, atype_t val){$/;"	f
+oarray_get	lib/oarray.c	/^atype_t oarray_get(oarray_t *arr, uint32_t index){$/;"	f
+oarray_insert	lib/oarray.c	/^bool oarray_insert(oarray_t *oarray, atype_t item){$/;"	f
+oarray_place	lib/oarray.c	/^oarray_t oarray_place(void *array, sort_func_t sort, uint32_t max_size){$/;"	f
+oarray_t	lib/oarray.h	/^} oarray_t;$/;"	t	typeref:struct:__anon1
+outb	lib/io.c	/^void outb(uint16_t port, unsigned char data){$/;"	f
+outl	lib/io.c	/^void outl(uint16_t port, uint32_t data){$/;"	f
+outw	lib/io.c	/^void outw(uint16_t port, uint16_t data){$/;"	f
+page_dir	lib/thr.h	/^    uint32_t    page_dir;   \/\/ Address of this thread's page dir$/;"	m	struct:__anon5
+page_dir_t	lib/mem.h	/^typedef uint32_t * page_dir_t;$/;"	t
+page_tbl_t	lib/mem.h	/^typedef uint32_t * page_tbl_t;$/;"	t
+palloc_at_v	lib/mem.c	/^bool palloc_at_v(uint32_t virt, bool rw, bool user){$/;"	f
+partition_t	lib/ptbl.h	/^} partition_t;$/;"	t	typeref:struct:__anon13
+parts	lib/ata.h	/^    list_head_t parts;         \/\/ List of partitions on device$/;"	m	struct:__anon7
+pci_class_id_record_t	lib/pci_dev_info.h	/^} __attribute__((__packed__)) pci_class_id_record_t;$/;"	t	typeref:struct:__anon22
+pci_class_ids	lib/pci_dev_info.h	/^pci_class_id_record_t pci_class_ids[] = {$/;"	v
+pci_config_read	lib/pci.c	/^uint32_t pci_config_read(uint8_t bus, uint8_t slot, uint8_t func, uint8_t reg){$/;"	f
+pci_dev_get_info	lib/pci.c	/^pci_dev_t * pci_dev_get_info(uint8_t bus, uint8_t slot, uint8_t func){$/;"	f
+pci_dev_id_record_t	lib/pci_dev_info.h	/^} __attribute__((__packed__)) pci_dev_id_record_t;$/;"	t	typeref:struct:__anon21
+pci_dev_ids	lib/pci_dev_info.h	/^pci_dev_id_record_t pci_dev_ids[] = {$/;"	v
+pci_dev_lookup_ids	lib/pci.c	/^void pci_dev_lookup_ids(pci_dev_t *dev){$/;"	f
+pci_dev_print	lib/pci.c	/^void pci_dev_print(pci_dev_t * dev){$/;"	f
+pci_dev_t	lib/pci.h	/^} pci_dev_t;$/;"	t	typeref:struct:__anon6
+pci_devs	lib/pci.c	/^list_head_t pci_devs;$/;"	v
+pci_err	lib/pci.c	/^char pci_err[ERR_STR_SIZE];$/;"	v
+pci_found_dev	lib/pci.c	/^void pci_found_dev(pci_dev_t *dev){$/;"	f
+pci_init	lib/pci.c	/^void pci_init(){$/;"	f
+pci_search_bus	lib/pci.c	/^list_head_t * pci_search_bus(uint8_t bus){$/;"	f
+pci_tree	lib/pci.c	/^list_head_t pci_tree;$/;"	v
+pci_vendor_id_record_t	lib/pci_dev_info.h	/^}  __attribute__((__packed__)) pci_vendor_id_record_t;$/;"	t	typeref:struct:__anon20
+pci_vendor_ids	lib/pci_dev_info.h	/^pci_vendor_id_record_t  pci_vendor_ids[] = {$/;"	v
+pid	lib/thr.h	/^    uint16_t    pid;    \/\/ Process id - unique id for this process.$/;"	m	struct:__anon5
+pmap	lib/mem.c	/^bool pmap(uint32_t phys, uint32_t virt, bool rw, bool user){$/;"	f
+pop	boot.asm	/^    pop ds$/;"	d
+ppalloc	lib/mem.c	/^uint32_t ppalloc(){$/;"	f
+ppfree	lib/mem.c	/^void ppfree(uint32_t addr){$/;"	f
+prdt	lib/ata.h	/^    ata_prd_t   *prdt;          \/\/ Physical Region Descriptor Table$/;"	m	struct:__anon9
+prev	lib/list.h	/^    struct list_node *prev;$/;"	m	struct:list_node	typeref:struct:list_node::list_node
+print_thread_t	lib/thr.c	/^void print_thread_t (char *var_name, thread_t *thread){$/;"	f
+printf	lib/c/printf.c	/^int printf(const char *format, ...){$/;"	f
+printf_buffer	lib/c/printf.c	/^char printf_buffer[PRINTF_BUFFER_SIZE];$/;"	v
+priority	lib/thr.h	/^    uint8_t     priority;$/;"	m	struct:__anon5
+prog_if	lib/pci.h	/^    uint8_t     prog_if;$/;"	m	struct:__anon6
+prog_if	lib/pci_dev_info.h	/^	uint8_t prog_if;$/;"	m	struct:__anon22
+prog_if_desc	lib/pci.h	/^    char        **prog_if_desc;$/;"	m	struct:__anon6
+prog_if_desc	lib/pci_dev_info.h	/^	char    *prog_if_desc;$/;"	m	struct:__anon22
+psalloc_at_v	lib/mem.c	/^bool psalloc_at_v(uint32_t virt, bool rw, bool user, int num){$/;"	f
+ptbl_entry_parse	lib/ptbl.c	/^partition_t * ptbl_entry_parse(uint8_t *ptr){$/;"	f
+ptbl_err	lib/ptbl.c	/^char ptbl_err[ERR_STR_SIZE];$/;"	v
+ptbl_parse	lib/ptbl.c	/^bool ptbl_parse(void *ptbl, list_head_t *list){$/;"	f
+ptbl_partition_print	lib/ptbl.c	/^void ptbl_partition_print(partition_t *part){$/;"	f
+ptrdiff_t	lib/c/stddef.h	/^typedef signed int ptrdiff_t;$/;"	t
+push	boot.asm	/^    push ds$/;"	d
+resched	lib/sched.c	/^void resched(isr_stack_t regs){$/;"	f
+reserved	lib/ata.h	/^    uint8_t     reserved;   \/\/ Set to 0.$/;"	m	struct:__anon8
+revision_id	lib/pci.h	/^    uint8_t     revision_id;$/;"	m	struct:__anon6
+rw	lib/mem.h	/^    bool        rw;$/;"	m	struct:__anon14
+scrn_clear	lib/scrn.c	/^void scrn_clear(){$/;"	f
+scrn_move_hw_cursor	lib/scrn.c	/^void scrn_move_hw_cursor(){$/;"	f
+scrn_put_var	lib/scrn.c	/^void scrn_put_var(char *name, long num){$/;"	f
+scrn_put_var_16	lib/scrn.c	/^void scrn_put_var_16(char *name, long num){$/;"	f
+scrn_put_var_h	lib/scrn.c	/^void scrn_put_var_h(char *name, long num){$/;"	f
+scrn_put_var_str	lib/scrn.c	/^void scrn_put_var_str(char *name, char *str){$/;"	f
+scrn_puta	lib/scrn.c	/^void scrn_puta(char **str, char *delim, int len){$/;"	f
+scrn_putc	lib/scrn.c	/^void scrn_putc(char c){$/;"	f
+scrn_putn	lib/scrn.c	/^void scrn_putn(long num){$/;"	f
+scrn_putn_16	lib/scrn.c	/^void scrn_putn_16(long num){$/;"	f
+scrn_putn_h	lib/scrn.c	/^void scrn_putn_h(long num){$/;"	f
+scrn_puts	lib/scrn.c	/^void scrn_puts(char *str){$/;"	f
+scrn_scroll	lib/scrn.c	/^void scrn_scroll(){$/;"	f
+sec_cnt_28	lib/ata.h	/^    uint64_t    sec_cnt_28;     \/\/ Number of addressable sectors with LBA28$/;"	m	struct:__anon7
+sec_cnt_48	lib/ata.h	/^    uint64_t    sec_cnt_48;     \/\/ Number of addressable sectors with LBA48 (if applicable)$/;"	m	struct:__anon7
+section	boot.asm	/^section .bss$/;"	l
+section	boot.asm	/^section .text$/;"	l
+sel	lib/idt.h	/^    uint16_t sel;        \/* Our kernel segment goes here! *\/$/;"	m	struct:__anon11
+sel_dev	lib/ata.h	/^    bool        sel_dev;        \/\/ Which device is currently selected?$/;"	m	struct:__anon9
+sem	lib/ata.h	/^    sem_t       sem;            \/\/ Semaphore lock. You must acquire the lock on a device before$/;"	m	struct:__anon9
+sem	lib/ata.h	/^    sem_t       sem;            \/\/ semaphore lock on this device$/;"	m	struct:__anon7
+sem	lib/thr.h	/^    uint32_t    sem;        \/\/ Pointer to semaphore process is waiting on.$/;"	m	struct:__anon5
+sem_new	lib/sem.c	/^sem_t sem_new(init_cnt){$/;"	f
+sem_release	lib/sem.c	/^void sem_release(sem_t *sem){$/;"	f
+sem_t	lib/sem.h	/^} sem_t;$/;"	t	typeref:struct:__anon17
+sem_wait	lib/sem.c	/^void sem_wait(sem_t *sem){$/;"	f
+serial	lib/ata.h	/^    char        serial[21];     \/\/ serial number$/;"	m	struct:__anon7
+set_page_dir	lib/mem.c	/^void set_page_dir(page_dir_t pd){$/;"	f
+set_page_table_entry_flags	lib/mem.c	/^bool set_page_table_entry_flags(page_dir_t pd, uint32_t addr, uint32_t flags){$/;"	f
+size	lib/list.h	/^    uint32_t size;$/;"	m	struct:__anon19
+size	lib/mem.h	/^    uint32_t    size;$/;"	m	struct:__anon15
+size	lib/oarray.h	/^    uint32_t    size;$/;"	m	struct:__anon1
+size	lib/ptbl.h	/^    uint32_t    size;$/;"	m	struct:__anon13
+size_t	lib/c/stddef.h	/^typedef unsigned int size_t;$/;"	t
+sleep	lib/time.c	/^void sleep(int no, char units){$/;"	f
+slot	lib/pci.h	/^    uint8_t     slot;$/;"	m	struct:__anon6
+snprintf	lib/c/printf.c	/^int snprintf(char *buffer, size_t size, const char *format, ...){$/;"	f
+sort	lib/oarray.h	/^    sort_func_t sort;$/;"	m	struct:__anon1
+sort_func_t	lib/oarray.h	/^typedef char (*sort_func_t)(atype_t, atype_t);$/;"	t
+ss	lib/gdt.h	/^    uint16_t ss;$/;"	m	struct:__anon4
+ss	lib/isr.h	/^    uint32_t eip, cs, eflags, useresp, ss;$/;"	m	struct:__anon18
+ss	lib/thr.h	/^    uint16_t ss;$/;"	m	struct:__anon5
+ss0	lib/gdt.h	/^    uint16_t ss0;$/;"	m	struct:__anon4
+ss0_h	lib/gdt.h	/^    uint16_t ss0_h;$/;"	m	struct:__anon4
+ss1	lib/gdt.h	/^    uint16_t ss1;$/;"	m	struct:__anon4
+ss1_h	lib/gdt.h	/^    uint16_t ss1_h;$/;"	m	struct:__anon4
+ss2	lib/gdt.h	/^    uint16_t ss2;$/;"	m	struct:__anon4
+ss2_h	lib/gdt.h	/^    uint16_t ss2_h;$/;"	m	struct:__anon4
+ss_h	lib/gdt.h	/^    uint16_t ss_h;$/;"	m	struct:__anon4
+stack_base	lib/thr.h	/^    uint32_t    stack_base; \/\/ User mode stack for this thr$/;"	m	struct:__anon5
+stack_size	lib/thr.h	/^    uint32_t    stack_size;$/;"	m	struct:__anon5
+start	lib/mem.h	/^    void        *start;$/;"	m	struct:__anon14
+start	lib/ptbl.h	/^    uint32_t    start;$/;"	m	struct:__anon13
+state	lib/thr.h	/^    uint8_t     state;  \/\/ ready, sleeping, suspended, etc.$/;"	m	struct:__anon5
+strcat	lib/c/string.c	/^char *strcat(char *s1, const char *s2){$/;"	f
+strcpy	lib/c/string.c	/^char *strcpy(char *s1, const char *s2){$/;"	f
+strlen	lib/c/string.c	/^size_t strlen(const char *cs){$/;"	f
+subclass_desc	lib/pci.h	/^    char        **subclass_desc;$/;"	m	struct:__anon6
+subclass_desc	lib/pci_dev_info.h	/^	char    *subclass_desc;$/;"	m	struct:__anon22
+subclass_id	lib/pci.h	/^    uint8_t     subclass_id;$/;"	m	struct:__anon6
+subclass_id	lib/pci_dev_info.h	/^	uint8_t	subclass_id;$/;"	m	struct:__anon22
+subsys_id	lib/pci.h	/^    uint16_t    subsys_id;$/;"	m	struct:__anon6
+subsys_vendor_id	lib/pci.h	/^    uint16_t    subsys_vendor_id;$/;"	m	struct:__anon6
+tab_width	lib/scrn.c	/^volatile uint8_t tab_width = 8;$/;"	v
+thr_create	lib/thr.c	/^thread_t * thr_create($/;"	f
+thr_current	lib/thr.c	/^thread_t    *thr_current;  \/\/ Currently running thread.$/;"	v
+thr_err	lib/thr.c	/^char thr_err[ERR_STR_SIZE];\/\/ thread error string$/;"	v
+thr_init	lib/thr.c	/^void thr_init(){$/;"	f
+thr_last_pid	lib/thr.c	/^uint16_t thr_last_pid;     \/\/ pid most recently allocated.$/;"	v
+thr_last_tid	lib/thr.c	/^uint16_t thr_last_tid;     \/\/ tid most recently allocated.$/;"	v
+thr_msg	lib/thr.c	/^list_head_t thr_msg;       \/\/ List of threads waiting on a message.$/;"	v
+thr_null	lib/thr.c	/^void thr_null(){$/;"	f
+thr_ready	lib/thr.c	/^list_head_t thr_ready;     \/\/ List of threads ready to run.$/;"	v
+thr_sem	lib/thr.c	/^list_head_t thr_sem;       \/\/ List of threads waiting on a semaphore.$/;"	v
+thr_sleep	lib/thr.c	/^list_head_t thr_sleep;     \/\/ List of threads sleeping.$/;"	v
+thr_threads	lib/thr.c	/^list_head_t thr_threads;   \/\/ List of all threads.$/;"	v
+thread_t	lib/thr.h	/^} thread_t;$/;"	t	typeref:struct:__anon5
+tid	lib/thr.h	/^    uint16_t    tid;    \/\/ Thread id - unique id for this thread.$/;"	m	struct:__anon5
+tid_alloc	lib/tid.c	/^bool tid_alloc(thread_t *thread){$/;"	f
+tid_hash	lib/tid.h	20;"	d
+tid_hash_tbl	lib/tid.c	/^list_head_t * tid_hash_tbl[TID_HASH_SIZE];  \/\/ The hash table.$/;"	v
+tid_init	lib/tid.c	/^void tid_init(){$/;"	f
+tid_last	lib/tid.c	/^uint16_t tid_last;                          \/\/ Last TID allocated.$/;"	v
+tid_sem	lib/tid.c	/^sem_t tid_sem;                              \/\/ Semaphore for hash table$/;"	v
+time_init	lib/time.c	/^void time_init(){$/;"	f
+time_irq_handler	lib/time.c	/^void time_irq_handler(isr_stack_t *r){$/;"	f
+time_ticks	lib/time.c	/^long time_ticks = 0; \/* Incremented 1000 times per second *\/$/;"	v
+trap	lib/gdt.h	/^    uint16_t trap;$/;"	m	struct:__anon4
+tss_kernel	lib/gdt.c	/^tss_t tss_kernel;$/;"	v
+tss_t	lib/gdt.h	/^} __attribute__((__packed__)) tss_t;$/;"	t	typeref:struct:__anon4
+tss_user	lib/gdt.c	/^tss_t tss_user;$/;"	v
+uc	lib/util/string.c	/^char uc(const char c){$/;"	f
+udma_sel	lib/ata.h	/^    uint8_t     udma_sel;       \/\/ Selected UDMA modes$/;"	m	struct:__anon7
+udma_sup	lib/ata.h	/^    uint8_t     udma_sup;       \/\/ Supported UDMA modes$/;"	m	struct:__anon7
+uint16_t	lib/c/stdint.h	/^typedef unsigned short  uint16_t;$/;"	t
+uint32_t	lib/c/stdint.h	/^typedef unsigned int    uint32_t;$/;"	t
+uint64_t	lib/c/stdint.h	/^typedef unsigned long   uint64_t;$/;"	t
+uint8_t	lib/c/stdint.h	/^typedef unsigned char   uint8_t;$/;"	t
+use_dma	lib/ata.h	/^    bool        use_dma;        \/\/ Can we use DMA?$/;"	m	struct:__anon7
+user	lib/mem.h	/^    bool        user;$/;"	m	struct:__anon14
+useresp	lib/isr.h	/^    uint32_t eip, cs, eflags, useresp, ss;$/;"	m	struct:__anon18
+va_arg	lib/c/stdarg.h	15;"	d
+va_end	lib/c/stdarg.h	16;"	d
+va_list	lib/c/stdarg.h	/^typedef void * va_list;$/;"	t
+va_start	lib/c/stdarg.h	14;"	d
+value	lib/list.h	/^    list_item_t value;$/;"	m	struct:list_node
+vendor_id	lib/pci.h	/^    uint16_t    vendor_id;$/;"	m	struct:__anon6
+vendor_id	lib/pci_dev_info.h	/^	uint16_t    vendor_id;$/;"	m	struct:__anon20
+vendor_id	lib/pci_dev_info.h	/^	uint16_t    vendor_id;$/;"	m	struct:__anon21
+vendor_long	lib/pci.h	/^    char        **vendor_long;$/;"	m	struct:__anon6
+vendor_long	lib/pci_dev_info.h	/^	char        *vendor_long;$/;"	m	struct:__anon20
+vendor_short	lib/pci.h	/^    char        **vendor_short;$/;"	m	struct:__anon6
+vendor_short	lib/pci_dev_info.h	/^	char        *vendor_short;$/;"	m	struct:__anon20
+vpage_dir	lib/mem.c	/^page_dir_t      vpage_dir;       \/* Virtual address of current page dir (Virtual) *\/$/;"	v
+vpage_tables	lib/mem.c	/^void            *vpage_tables;   \/* Virtual address of array of page tables *\/$/;"	v
+vprintf	lib/c/printf.c	/^int vprintf(const char *format, va_list ap){$/;"	f
+vsnprintf	lib/c/printf.c	/^int vsnprintf(char *buffer, size_t size, const char *format, va_list ap){$/;"	f
+wait_list	lib/sem.h	/^    list_head_t wait_list;$/;"	m	struct:__anon17
+xpos	lib/scrn.c	/^volatile uint8_t xpos      = 0;$/;"	v
+ypos	lib/scrn.c	/^volatile uint8_t ypos      = 0;$/;"	v

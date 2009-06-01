@@ -1,0 +1,25 @@
+                serial  =
+                DMA Sup = 0x0
+                DMA Sel = 0x0
+                UDMA Sel        = 0x0
+                UDMA Sup        = 0x0
+                LBA48   = 0
+                Sectors = 0
+        position 1
+                DMA     = 0
+                ATAPI   = 1
+                model   =
+                serial  =
+                DMA Sup = 0x0
+                DMA Sel = 0x0
+                UDMA Sel        = 0x0
+                UDMA Sup        = 0x0
+                LBA48   = 0
+                Sectors = 0
+controller 1
+        Base    = 0x170
+        Busmaster       = 0x0
+        DMA simplex     = 0
+Read Failed:
+Sectors to be read are not LBA24 addressable.Done
+ß
